@@ -5,14 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\node_modules\**" />
-    <Content Remove="wwwroot\node_modules\**" />
-    <EmbeddedResource Remove="wwwroot\node_modules\**" />
-    <None Remove="wwwroot\node_modules\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Compile Remove="client\**" />
+    <Content Remove="client\**" />
+    <EmbeddedResource Remove="client\**" />
+    <None Remove="client\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Apworks.Integration.AspNetCore" Version="0.1.95" />
@@ -24,6 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

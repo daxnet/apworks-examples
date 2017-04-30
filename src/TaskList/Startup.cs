@@ -48,8 +48,13 @@ namespace Apworks.Examples.TaskList
             loggerFactory.AddDebug();
 
             app.EnrichDataServiceExceptionResponse();
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseMvc();
+            
         }
     }
 }

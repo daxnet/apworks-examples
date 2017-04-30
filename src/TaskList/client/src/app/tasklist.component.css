@@ -1,0 +1,35 @@
+
+.tasklist ul {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    list-style-type: none;
+    padding: 0;
+}
+
+.tasklist li {
+    position: relative;
+    left: 0;
+    background-color: #EEE;
+    margin: .5em;
+    padding: .3em;
+    height: 2.2em;
+    border-radius: 4px;
+  }
+  .tasklist li.selected:hover {
+    background-color: #BBD8DC !important;
+    color: white;
+  }
+  .tasklist li:hover {
+    color: #607D8B;
+    background-color: #DDD;
+  }
+  .tasklist .text {
+    position: relative;
+    top: -.1em;
+  }
+
+  .tasklist .done {
+    color: lightgrey;
+    text-decoration: line-through;
+  }
+

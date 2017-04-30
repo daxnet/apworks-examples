@@ -1,0 +1,33 @@
+<div>
+    <div class="btn-group btn-group-sm" role="group" aria-label="Actions">
+        <button type="button" class="btn btn-primary"><span class="fa fa-plus-circle">&nbsp;</span>Add New</button>
+        <button type="button" class="btn btn-success" *ngIf="taskListResponse">Mark All as Done</button>
+        <button type="button" class="btn btn-success" *ngIf="taskListResponse">Reset All</button>
+    </div>
+</div>
+<div *ngIf="taskListResponse">
+
+    <div class="tasklist">
+        <ul>
+            <li *ngFor='let item of taskListResponse.taskItems'>
+                <input type="checkbox" [(ngModel)]='item.Done' (ngModelChange)='onStatusUpdated(item)' />
+                <span class="text" [class.done]="item.Done">{{item.Title}}</span>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <nav aria-label="Pager">
+            <ul class="pagination">
+                <li class="page-item" [class.disabled]="currentPageIdx === 1">
+                    <a class="page-link" href="#" (click)='onPageSelected(currentPageIdx - 1)'>Previous</a>
+                </li>
+                <li class="page-item" *ngFor="let pageIdx of pageIndecies" [class.active]="pageIdx === currentPageIdx">
+                    <a class="page-link" href="#" (click)='onPageSelected(pageIdx)'>{{pageIdx}}</a>
+                </li>
+                <li class="page-item" [class.disabled]="currentPageIdx === taskListResponse.totalPages">
+                    <a class="page-link" href="#" (click)='onPageSelected(currentPageIdx + 1)'>Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
