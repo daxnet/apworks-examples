@@ -1,33 +1,65 @@
-<div>
-    <div class="btn-group btn-group-sm" role="group" aria-label="Actions">
-        <button type="button" class="btn btn-primary"><span class="fa fa-plus-circle">&nbsp;</span>Add New</button>
-        <button type="button" class="btn btn-success" *ngIf="taskListResponse">Mark All as Done</button>
-        <button type="button" class="btn btn-success" *ngIf="taskListResponse">Reset All</button>
+<div class="row">
+    <div class="col-md-12">
+        <form>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Type the task here..." [(ngModel)]='newTaskItemTitle' required name="newTaskItemTitle"
+                    #n='ngModel'>
+                <div class="input-group-btn">
+                    <button class="btn btn-primary btn-action" type="submit" (click)="onAddNewClick()">
+                        <span class="fa fa-plus-circle">&nbsp;</span>Add New
+                    </button>
+                </div>
+
+            </div>
+            <div [hidden]="n.valid || hideRequiredMessage" class="alert alert-danger">
+                Task is required!
+            </div>
+        </form>
     </div>
 </div>
-<div *ngIf="taskListResponse">
-
-    <div class="tasklist">
-        <ul>
-            <li *ngFor='let item of taskListResponse.taskItems'>
-                <input type="checkbox" [(ngModel)]='item.Done' (ngModelChange)='onStatusUpdated(item)' />
-                <span class="text" [class.done]="item.Done">{{item.Title}}</span>
-            </li>
-        </ul>
+<div *ngIf='taskListResponse' [hidden]='taskListResponse === null || taskListResponse.taskItems.length === 0'>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn-group btn-group-md" role="group" aria-label="Actions">
+                <button type="button" class="btn btn-success btn-action">
+                <span class="fa fa-check-circle">&nbsp;</span>Mark All as Done
+            </button>
+                <button type="button" class="btn btn-success btn-action">
+                <span class="fa fa-refresh">&nbsp;</span>Reset All
+            </button>
+            </div>
+        </div>
     </div>
-    <div>
-        <nav aria-label="Pager">
-            <ul class="pagination">
-                <li class="page-item" [class.disabled]="currentPageIdx === 1">
-                    <a class="page-link" href="#" (click)='onPageSelected(currentPageIdx - 1)'>Previous</a>
-                </li>
-                <li class="page-item" *ngFor="let pageIdx of pageIndecies" [class.active]="pageIdx === currentPageIdx">
-                    <a class="page-link" href="#" (click)='onPageSelected(pageIdx)'>{{pageIdx}}</a>
-                </li>
-                <li class="page-item" [class.disabled]="currentPageIdx === taskListResponse.totalPages">
-                    <a class="page-link" href="#" (click)='onPageSelected(currentPageIdx + 1)'>Next</a>
-                </li>
-            </ul>
-        </nav>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tasklist">
+                <ul>
+                    <li *ngFor='let item of taskListResponse.taskItems'>
+                        <input type="checkbox" [(ngModel)]='item.Done' (ngModelChange)='onStatusUpdated(item)' />
+                        <span class="text" [class.done]="item.Done">{{item.Title}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <nav aria-label="Pager">
+                    <ul class="pagination">
+                        <li class="page-item" [class.disabled]="currentPageIdx === 1">
+                            <a class="page-link" href="#" (click)='onPageSelected(currentPageIdx - 1)'>Previous</a>
+                        </li>
+                        <li class="page-item" *ngFor="let pageIdx of pageIndecies" [class.active]="pageIdx === currentPageIdx">
+                            <a class="page-link" href="#" (click)='onPageSelected(pageIdx)'>{{pageIdx}}</a>
+                        </li>
+                        <li class="page-item" [class.disabled]="currentPageIdx === taskListResponse.totalPages">
+                            <a class="page-link" href="#" (click)='onPageSelected(currentPageIdx + 1)'>Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div [hidden]='taskListResponse != null && taskListResponse.taskItems.length > 0'>
+    <div class="alert alert-info no-task-info" role="alert">
+        <strong>No Tasks!</strong> There is no task in the list. Add some please.
     </div>
 </div>

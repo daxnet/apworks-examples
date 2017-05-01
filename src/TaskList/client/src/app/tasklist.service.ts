@@ -20,7 +20,7 @@ export class TaskListService {
     }
 
     getTaskList(pageIndex: number = 1): Promise<TaskListResponse> {
-        var url = `${SERVICE_BASE_URL}?size=${PAGE_SIZE}&page=${pageIndex}`;
+        const url = `${SERVICE_BASE_URL}?size=${PAGE_SIZE}&page=${pageIndex}`;
         return this.http.get(url)
             .toPromise()
             .then(response => {
@@ -46,6 +46,19 @@ export class TaskListService {
         builder.withHeader('Content-Type', 'application/json');
         this.http.patch(url, body, builder.build())
             .toPromise()
+            .catch(this.handleError);
+    }
+
+    addNew(title: string): Promise<string> {
+        const url = `${SERVICE_BASE_URL}`;
+        var item = new TaskItem();
+        item.Title = title;
+        var body = JSON.stringify(item);
+        var builder = new RequestOptionsBuilder();
+        builder.withHeader('Content-Type', 'application/json');
+        return this.http.post(url, body, builder.build())
+            .toPromise()
+            .then(response => response.toString())
             .catch(this.handleError);
     }
 
