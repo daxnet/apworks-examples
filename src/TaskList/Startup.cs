@@ -32,12 +32,14 @@ namespace Apworks.Examples.TaskList
         {
             // Add framework services.
             services.AddMvc();
-
+            var mongoServer = this.Configuration["mongo:server"];
+            var mongoPort = Convert.ToInt32(this.Configuration["mongo:port"]);
+            var mongoDatabase = this.Configuration["mongo:db"];
             services.AddApworks()
                 .WithDataServiceSupport(
                     new DataServiceConfigurationOptions(
                         new MongoRepositoryContext(
-                            new MongoRepositorySettings("localhost", "taskList"))))
+                            new MongoRepositorySettings(mongoServer, mongoPort, mongoDatabase))))
                 .Configure();
         }
 
@@ -46,7 +48,7 @@ namespace Apworks.Examples.TaskList
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
+            app.UseStaticFiles();
             app.EnrichDataServiceExceptionResponse();
             app.UseCors(builder => builder
                 .AllowAnyOrigin()

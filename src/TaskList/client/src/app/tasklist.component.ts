@@ -4,8 +4,6 @@ import { TaskItem } from './taskitem';
 import { TaskListService } from './tasklist.service';
 import { TaskListResponse } from './tasklist.response';
 
-import { environment } from '../environments/environment';
-
 @Component ({
     selector: 'task-list',
     templateUrl: './tasklist.component.html',
@@ -16,7 +14,6 @@ import { environment } from '../environments/environment';
 export class TaskListComponent implements OnInit {
 
     private taskListResponse: TaskListResponse;
-    private serviceUrl = "http://localhost:39518/api/taskItems";
     
     // The number array which holds the indecies of each page.
     private pageIndecies: number[] = new Array();
@@ -27,8 +24,6 @@ export class TaskListComponent implements OnInit {
     private newTaskItemTitle: string;
 
     private hideRequiredMessage: boolean = true;
-
-    private env = environment;
 
     ngOnInit(): void {
         this.getTaskList();
