@@ -62,6 +62,17 @@ export class TaskListService {
             .catch(this.handleError);
     }
 
+    updateAllStatus(done: boolean): Promise<any> {
+        const url = `${SERVICE_BASE_URL}/all`;
+        var body = JSON.stringify(done);
+
+        var builder = new RequestOptionsBuilder();
+        builder.withHeader('Content-Type', 'application/json');
+        return this.http.post(url, body, builder.build())
+            .toPromise()
+            .catch(this.handleError);
+    }
+
     private handleError(error: any): Promise<any> {
         console.error('An error occurred.', error);
         return Promise.reject(error.message || error);

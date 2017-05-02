@@ -1,3 +1,4 @@
+<h2>{{env.production}}</h2>
 <div class="row">
     <div class="col-md-12">
         <form>
@@ -21,10 +22,10 @@
     <div class="row">
         <div class="col-md-12">
             <div class="btn-group btn-group-md" role="group" aria-label="Actions">
-                <button type="button" class="btn btn-success btn-action">
+                <button type="button" class="btn btn-success btn-action" (click)='onUpdateAllStatusClick(true)'>
                 <span class="fa fa-check-circle">&nbsp;</span>Mark All as Done
             </button>
-                <button type="button" class="btn btn-success btn-action">
+                <button type="button" class="btn btn-success btn-action" (click)='onUpdateAllStatusClick(false)'>
                 <span class="fa fa-refresh">&nbsp;</span>Reset All
             </button>
             </div>

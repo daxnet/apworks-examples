@@ -21,5 +21,21 @@ namespace Apworks.Examples.TaskList.Controllers
             aggregateRoot.CreationTime = DateTime.UtcNow;
             return base.Post(aggregateRoot);
         }
+
+        [HttpPost]
+        [Route("all")]
+        public async Task<IActionResult> UpdateAllStatus([FromBody] bool done)
+        {
+            var taskItems = await this.Repository.FindAllAsync(x => x.Done != done);
+            foreach(var taskItem in taskItems)
+            {
+                taskItem.Done = done;
+                await this.Repository.UpdateAsync(taskItem);
+            }
+
+            await this.RepositoryContext.CommitAsync();
+
+            return NoContent();
+        }
     }
 }

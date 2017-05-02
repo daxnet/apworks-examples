@@ -4,6 +4,8 @@ import { TaskItem } from './taskitem';
 import { TaskListService } from './tasklist.service';
 import { TaskListResponse } from './tasklist.response';
 
+import { environment } from '../environments/environment';
+
 @Component ({
     selector: 'task-list',
     templateUrl: './tasklist.component.html',
@@ -25,6 +27,8 @@ export class TaskListComponent implements OnInit {
     private newTaskItemTitle: string;
 
     private hideRequiredMessage: boolean = true;
+
+    private env = environment;
 
     ngOnInit(): void {
         this.getTaskList();
@@ -64,13 +68,19 @@ export class TaskListComponent implements OnInit {
         this.hideRequiredMessage = this.newTaskItemTitle != null && this.newTaskItemTitle != '';
         if (this.newTaskItemTitle) {
             this.service.addNew(this.newTaskItemTitle)
-                .then(Response => {
+                .then(response => {
                     this.getTaskList();
                     this.newTaskItemTitle = '';
                     this.hideRequiredMessage = true;
                 });
             
         }
-        
+    }
+
+    private onUpdateAllStatusClick(done: boolean): void {
+        this.service.updateAllStatus(done)
+            .then(response => {
+                this.getTaskList();
+            });
     }
 }
