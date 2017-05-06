@@ -8,7 +8,6 @@ import { TaskItem } from './taskitem';
 import { TaskListResponse } from './tasklist.response';
 import { environment } from '../environments/environment';
 
-const PAGE_SIZE = 5;
 
 @Injectable()
 export class TaskListService {
@@ -20,7 +19,7 @@ export class TaskListService {
     }
 
     getTaskList(pageIndex: number = 1): Promise<TaskListResponse> {
-        const url = `${environment.serviceBaseUrl}?size=${PAGE_SIZE}&page=${pageIndex}`;
+        const url = `${environment.serviceBaseUrl}?size=${environment.pageSize}&page=${pageIndex}`;
         return this.http.get(url)
             .toPromise()
             .then(response => {
@@ -30,11 +29,10 @@ export class TaskListService {
                     json.totalRecords,
                     json.totalPages,
                     json._embedded.taskitems as TaskItem[]);
-            })
-            .catch(this.handleError);
+            }).catch((err) => {throw err;});
     }
 
-    updateItemStatus(item: TaskItem): void {
+    updateItemStatus(item: TaskItem): Promise<any> {
         const url = `${environment.serviceBaseUrl}/${item.Id}`;
         var body = JSON.stringify([{
             op: "replace",
@@ -44,9 +42,9 @@ export class TaskListService {
 
         var builder = new RequestOptionsBuilder();
         builder.withHeader('Content-Type', 'application/json');
-        this.http.patch(url, body, builder.build())
+        return this.http.patch(url, body, builder.build())
             .toPromise()
-            .catch(this.handleError);
+            .catch((err) => {throw err;});
     }
 
     addNew(title: string): Promise<string> {
@@ -59,7 +57,7 @@ export class TaskListService {
         return this.http.post(url, body, builder.build())
             .toPromise()
             .then(response => response.toString())
-            .catch(this.handleError);
+            .catch((err) => {throw err;});
     }
 
     updateAllStatus(done: boolean): Promise<any> {
@@ -70,11 +68,6 @@ export class TaskListService {
         builder.withHeader('Content-Type', 'application/json');
         return this.http.post(url, body, builder.build())
             .toPromise()
-            .catch(this.handleError);
-    }
-
-    private handleError(error: any): Promise<any> {
-        console.error('An error occurred.', error);
-        return Promise.reject(error.message || error);
+            .catch((err) => {throw err;});
     }
 }

@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { TaskItem } from './taskitem';
 import { TaskListService } from './tasklist.service';
 import { TaskListResponse } from './tasklist.response';
+import { NotificationsService } from 'angular2-notifications';
 
-@Component ({
+@Component({
     selector: 'task-list',
     templateUrl: './tasklist.component.html',
     styleUrls: ['./tasklist.component.css'],
@@ -14,7 +15,7 @@ import { TaskListResponse } from './tasklist.response';
 export class TaskListComponent implements OnInit {
 
     private taskListResponse: TaskListResponse;
-    
+
     // The number array which holds the indecies of each page.
     private pageIndecies: number[] = new Array();
 
@@ -27,10 +28,9 @@ export class TaskListComponent implements OnInit {
 
     ngOnInit(): void {
         this.getTaskList();
-        
     }
 
-    constructor (private service: TaskListService) {
+    constructor(private service: TaskListService, private notification: NotificationsService) {
 
     }
 
@@ -39,16 +39,21 @@ export class TaskListComponent implements OnInit {
             .then(response => {
                 this.taskListResponse = response;
                 console.log(`Total Records: ${response.totalRecords}, Total Pages: ${response.totalPages} `);
-                for(var idx = 1; idx <= response.totalPages; idx++) {
+                for (var idx = 1; idx <= response.totalPages; idx++) {
                     this.pageIndecies[idx - 1] = idx;
                 }
-                
                 this.currentPageIdx = response.totalPages > 0 ? 1 : 0;
-        });
+            }).catch((err) => {
+                this.notification.error('Error', err, notificationOptions);
+            });
     }
 
     private onStatusUpdated(item): void {
-        this.service.updateItemStatus(item);
+        this.service.updateItemStatus(item)
+            .then(response => this.notification.success('Success', 'Status updated successfully!', notificationOptions))
+            .catch((err) => {
+                this.notification.error('Error', err, notificationOptions);
+            });
     }
 
     private onPageSelected(idx): void {
@@ -56,6 +61,8 @@ export class TaskListComponent implements OnInit {
             .then(response => {
                 this.taskListResponse = response;
                 this.currentPageIdx = idx;
+            }).catch((err) => {
+                this.notification.error('Error', err, notificationOptions);
             });
     }
 
@@ -67,8 +74,11 @@ export class TaskListComponent implements OnInit {
                     this.getTaskList();
                     this.newTaskItemTitle = '';
                     this.hideRequiredMessage = true;
+                    this.notification.success('Success', 'New task has been added successfully!', notificationOptions);
+                }).catch((err) => {
+                    this.notification.error('Error', err, notificationOptions);
                 });
-            
+
         }
     }
 
@@ -76,6 +86,17 @@ export class TaskListComponent implements OnInit {
         this.service.updateAllStatus(done)
             .then(response => {
                 this.getTaskList();
+                this.notification.success('Success', 'Status updated successfully!', notificationOptions);
+            }).catch((err) => {
+                this.notification.error('Error', err, notificationOptions);
             });
     }
 }
+
+const notificationOptions: any = {
+    timeOut: 8000,
+    showProgressBar: true,
+    pauseOnHover: true,
+    clickToClose: true,
+    maxLength: 50
+};

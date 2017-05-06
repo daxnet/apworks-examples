@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
+  pageSize: 10,
   serviceBaseUrl: "http://localhost:39518/api/taskItems"
 };

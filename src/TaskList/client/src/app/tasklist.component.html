@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <form>
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Type the task here..." [(ngModel)]='newTaskItemTitle' required name="newTaskItemTitle"
+                <input type="text" class="form-control" placeholder="Type the task here to add..." [(ngModel)]='newTaskItemTitle' required name="newTaskItemTitle"
                     #n='ngModel'>
                 <div class="input-group-btn">
                     <button class="btn btn-primary btn-action" type="submit" (click)="onAddNewClick()">
@@ -63,3 +63,5 @@
         <strong>No Tasks!</strong> There is no task in the list. Add some please.
     </div>
 </div>
+
+<simple-notifications></simple-notifications>
