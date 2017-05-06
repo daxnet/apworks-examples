@@ -48,6 +48,7 @@ namespace Apworks.Examples.TaskList
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
             app.EnrichDataServiceExceptionResponse();
             app.UseCors(builder => builder
