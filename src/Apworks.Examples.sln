@@ -1,11 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task List", "Task List", "{B4E3DE3A-2853-4982-9BBE-B4F7813B24E2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apworks.Examples.TaskList", "TaskList\Apworks.Examples.TaskList.csproj", "{B9C7DDB3-265A-481D-970C-6987D6C58785}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Customer Service", "Customer Service", "{E1E029F1-5CB2-4893-BAF4-ADE13482C314}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apworks.Examples.CustomerService.Model", "CustomerService\Apworks.Examples.CustomerService.Model\Apworks.Examples.CustomerService.Model.csproj", "{7B981FAB-0769-4066-8BF8-B0D341A4B106}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apworks.Examples.CustomerService.MongoDB", "CustomerService\Apworks.Examples.CustomerService.MongoDB\Apworks.Examples.CustomerService.MongoDB.csproj", "{DC2AE20E-A33B-4403-AD66-65A5DFCC4D40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,11 +23,21 @@ Global
 		{B9C7DDB3-265A-481D-970C-6987D6C58785}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9C7DDB3-265A-481D-970C-6987D6C58785}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9C7DDB3-265A-481D-970C-6987D6C58785}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B981FAB-0769-4066-8BF8-B0D341A4B106}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B981FAB-0769-4066-8BF8-B0D341A4B106}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B981FAB-0769-4066-8BF8-B0D341A4B106}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B981FAB-0769-4066-8BF8-B0D341A4B106}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC2AE20E-A33B-4403-AD66-65A5DFCC4D40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC2AE20E-A33B-4403-AD66-65A5DFCC4D40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC2AE20E-A33B-4403-AD66-65A5DFCC4D40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC2AE20E-A33B-4403-AD66-65A5DFCC4D40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B9C7DDB3-265A-481D-970C-6987D6C58785} = {B4E3DE3A-2853-4982-9BBE-B4F7813B24E2}
+		{7B981FAB-0769-4066-8BF8-B0D341A4B106} = {E1E029F1-5CB2-4893-BAF4-ADE13482C314}
+		{DC2AE20E-A33B-4403-AD66-65A5DFCC4D40} = {E1E029F1-5CB2-4893-BAF4-ADE13482C314}
 	EndGlobalSection
 EndGlobal
