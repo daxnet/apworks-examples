@@ -1,6 +1,6 @@
 ﻿version: '2'
 services:
-  apworks-examples-tasklist:
+  tasklist:
     build: .
     ports:
       - "5000:5000"
