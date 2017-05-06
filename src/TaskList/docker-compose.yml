@@ -1,0 +1,10 @@
+﻿version: '2'
+services:
+  apworks-examples-tasklist:
+    build: .
+    ports:
+      - "5000:5000"
+    links:
+      - mongo
+  mongo:
+    image: "mongo"

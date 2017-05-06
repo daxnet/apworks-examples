@@ -18,4 +18,4 @@ if (!(Test-Path -Path $workspace/publish/wwwroot)) {
 
 cd $workspace/client
 npm install
-ng build -e prod -op $workspace/publish/wwwroot
+ng build -e docker -op $workspace/publish/wwwroot
