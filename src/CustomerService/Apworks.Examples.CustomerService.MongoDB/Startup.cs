@@ -10,6 +10,9 @@ using Microsoft.Extensions.Logging;
 using Apworks.Integration.AspNetCore;
 using Apworks.Repositories.MongoDB;
 using Apworks.Integration.AspNetCore.Configuration;
+using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.Extensions.PlatformAbstractions;
+using System.IO;
 
 namespace Apworks.Examples.CustomerService.MongoDB
 {
@@ -42,6 +45,17 @@ namespace Apworks.Examples.CustomerService.MongoDB
                     (new MongoRepositoryContext
                         (new MongoRepositorySettings(mongoServer, mongoPort, mongoDatabase))))
                 .Configure();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Apworks Examples - MongoDB Repository RESTful API", Version = "v1" });
+
+                //Set the comments path for the swagger json and ui.
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var xmlPath = Path.Combine(basePath, "Documentation.xml");
+                c.IncludeXmlComments(xmlPath);
+                c.IncludeXmlComments(Path.Combine(basePath, "Apworks.Integration.AspNetCore.xml"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +67,13 @@ namespace Apworks.Examples.CustomerService.MongoDB
             app.EnrichDataServiceExceptionResponse();
 
             app.UseMvc();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Apworks Examples - MongoDB Repository RESTful API");
+            });
         }
     }
 }

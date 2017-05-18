@@ -45,7 +45,7 @@ export class TaskListService {
     }
 
     getTaskList(pageIndex: number = 1): Promise<TaskListResponse> {
-        const url = `${environment.serviceBaseUrl}?size=${environment.pageSize}&page=${pageIndex}`;
+        const url = `${environment.serviceBaseUrl}?size=${environment.pageSize}&page=${pageIndex}&sort=CreationTime d`;
         return this.http.get(url)
             .toPromise()
             .then(response => {
