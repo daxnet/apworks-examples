@@ -1,10 +1,10 @@
-﻿using Apworks.Examples.CustomerService.Model;
-using Apworks.Integration.AspNetCore.DataServices;
+﻿using Apworks.Integration.AspNetCore.DataServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Apworks.Repositories;
+using Apworks.Examples.CustomerService.MongoDB.Model;
 
 namespace Apworks.Examples.CustomerService.MongoDB.Controllers
 {
