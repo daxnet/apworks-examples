@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apworks.Examples.CustomerSe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WeText", "WeText", "{F678684F-A0AB-4891-84A7-BFB5A52A92F3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeText.Services.Accounts", "WeText\services\WeText.Services.Accounts\WeText.Services.Accounts.csproj", "{6063D3F8-2078-48DB-BF64-5736FF9B19AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{ED19F2EC-068D-41DD-9422-F7D89808703E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED19F2EC-068D-41DD-9422-F7D89808703E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED19F2EC-068D-41DD-9422-F7D89808703E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6063D3F8-2078-48DB-BF64-5736FF9B19AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6063D3F8-2078-48DB-BF64-5736FF9B19AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6063D3F8-2078-48DB-BF64-5736FF9B19AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6063D3F8-2078-48DB-BF64-5736FF9B19AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,5 +47,6 @@ Global
 		{B9C7DDB3-265A-481D-970C-6987D6C58785} = {B4E3DE3A-2853-4982-9BBE-B4F7813B24E2}
 		{DC2AE20E-A33B-4403-AD66-65A5DFCC4D40} = {E1E029F1-5CB2-4893-BAF4-ADE13482C314}
 		{ED19F2EC-068D-41DD-9422-F7D89808703E} = {E1E029F1-5CB2-4893-BAF4-ADE13482C314}
+		{6063D3F8-2078-48DB-BF64-5736FF9B19AA} = {F678684F-A0AB-4891-84A7-BFB5A52A92F3}
 	EndGlobalSection
 EndGlobal
