@@ -53,7 +53,7 @@ namespace WeText.Services.Accounts
                 //Set the comments path for the swagger json and ui.
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "Documentation.xml");
-                if (Directory.Exists(xmlPath))
+                if (File.Exists(xmlPath))
                 {
                     c.IncludeXmlComments(xmlPath);
                 }

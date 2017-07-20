@@ -5,16 +5,20 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netcoreapp1.1\WeText.Services.Accounts.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\netcoreapp1.1\Documentation.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Apworks.Integration.AspNetCore" Version="0.1.110" />
-    <PackageReference Include="Apworks.Messaging.RabbitMQ" Version="0.1.110" />
-    <PackageReference Include="Apworks.Repositories.MongoDB" Version="0.1.110" />
+    <PackageReference Include="Apworks.Integration.AspNetCore" Version="0.1.113" />
+    <PackageReference Include="Apworks.Messaging.RabbitMQ" Version="0.1.113" />
+    <PackageReference Include="Apworks.Repositories.MongoDB" Version="0.1.113" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
