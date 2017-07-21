@@ -7,24 +7,27 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
+import { AccountService } from 'app/services/account.service';
+import { AuthGuard } from 'app/guards/auth.guard';
+import { HomeComponent } from './components/home/home.component';
+import { Routing } from 'app/app.routing';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot([
-      {
-        path: '',
-        component: LoginComponent
-      }
-    ], { useHash: true})
+    Routing
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    AccountService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
