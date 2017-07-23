@@ -1,0 +1,11 @@
+footer {
+    text-align: center;
+    color: gray;
+    font-size: small;
+}
+
+.brand-icon {
+    width: 36px;
+    height: auto;
+    margin: -8px;
+}

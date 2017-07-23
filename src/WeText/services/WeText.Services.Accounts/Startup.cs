@@ -69,6 +69,11 @@ namespace WeText.Services.Accounts
 
             app.EnrichDataServiceExceptionResponse();
 
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
             app.UseMvc();
 
             app.UseSwagger();

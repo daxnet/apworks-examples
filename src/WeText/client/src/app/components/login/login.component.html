@@ -1,25 +1,31 @@
+<div class="bg">
+  <div class="jumbotron">
+    <div class="container">
+      <h1>WeText</h1>
+      <h2><small>An Apworks example for DDD, CQRS and Microservices.</small></h2>
+    </div>
+  </div>
+</div>
 <div class="container">
   <div class="row">
-    <div class="absolute-center is-responsive">
-      <div class="col-sm-12 col-md-10 col-md-offset-1">
-        <h2>SIGN IN</h2>
-        <form action="" id="loginForm">
-          <div class="form-group input-group">
-            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <input class="form-control" type="text" name='username' placeholder="User Name" [(ngModel)]='userName' />
-          </div>
-          <div class="form-group input-group">
-            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-            <input class="form-control" type="password" name='password' placeholder="Password" [(ngModel)]='password' />
-          </div>
-          <div class="form-group">
-            <button type="button" class="btn btn-primary btn-block" (click)='login()'>Login</button>
-          </div>
-          <div class="form-group text-center">
-            <a href="#">FORGOT PASSWORD</a>&nbsp;|&nbsp;<a href="#">SIGN UP</a>
-          </div>
-        </form>
-      </div>
+    <div class="col-sm-12 col-md-4 col-md-offset-4">
+      <h2>SIGN IN</h2>
+      <form action="" id="loginForm">
+        <div class="form-group input-group">
+          <span class="input-group-addon"><i class="fa fa-user"></i></span>
+          <input class="form-control" type="text" name='userName' placeholder="User Name" [(ngModel)]='userName' required #un='ngModel'/>
+        </div>
+        <div class="form-group input-group">
+          <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+          <input class="form-control" type="password" name='password' placeholder="Password" [(ngModel)]='password' required #pwd='ngModel' />
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-block" (click)='login()'>Login</button>
+        </div>
+        <div class="form-group text-center">
+          <a href="#">FORGOT PASSWORD</a>&nbsp;|&nbsp;<a href="#">SIGN UP</a>
+        </div>
+      </form>
     </div>
   </div>
 </div>

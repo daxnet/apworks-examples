@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
-import { Observable } from 'rxjs';
 import {environment} from '../../environments/environment';
-import 'rxjs/add/operator/map';
+
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class AccountService {
@@ -14,24 +14,22 @@ export class AccountService {
     this.currentUserName = currentUser && currentUser.userName;
   }
 
-  login(userName: string, password: string): Observable<boolean> {
-    const headers = new Headers({ 'Content-Type': 'application/json' });
+  login(userName: string, password: string): Promise<boolean> {
+    const headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
     const options = new RequestOptions({ headers: headers });
 
     return this.http.post(`${environment.baseUrl.accountService}api/users/authenticate`,
-        JSON.stringify({ username: userName, password: password }),
+        JSON.stringify({ userName: userName, password: password }),
         options)
-      .map((response: Response) => {
-        if (response.status === 200) {
-          // store username and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify({ userName: userName }));
-          // return true to indicate successful login
-          return true;
-        } else {
-          // return false to indicate failed login
-          return false;
-        }
-      });
+        .toPromise()
+        .then(response => {
+          if (response.status === 200) {
+            localStorage.setItem('currentUser', JSON.stringify({ userName: userName }));
+            return true;
+          } else {
+            return false;
+          }
+        });
    }
 
    logout(): void {

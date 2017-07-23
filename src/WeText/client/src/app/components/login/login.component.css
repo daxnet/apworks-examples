@@ -1,15 +1,36 @@
-
-.absolute-center {
-  margin: auto;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
+.bg {
+  margin-top: -30px;
+  background: url('/assets/earth.jpg') no-repeat center center;
+  width: 100%;
+  min-height: 450px; /*same height as jumbotron */
+  top:0;
+  left:0;
+  z-index: -1;
 }
 
-.absolute-center.is-responsive {
-  width: 50%; 
-  height: 50%;
-  min-width: 200px;
-  max-width: 400px;
-  padding: 40px;
+.jumbotron {
+  margin-top: -30px;
+  margin-bottom: 0px;
+  min-height: 450px;
+  color: white;
+  text-shadow: black 0.3em 0.3em 0.3em;
+  background:transparent;
 }
 
+.jumbotron h1 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 8em;
+}
+
+.jumbotron h2 {
+  font-style: italic;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.ng-valid[required], .ng-valid.required  {
+      border-left: 5px solid #42A948; /* green */
+    }
+    .ng-invalid:not(form)  {
+      border-left: 5px solid #a94442; /* red */
+    }
+    
