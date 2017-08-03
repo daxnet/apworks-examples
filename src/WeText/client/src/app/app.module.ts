@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 
+import { DxTooltipModule, DxTemplateModule } from 'devextreme-angular';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { AccountService } from 'app/services/account.service';
@@ -29,7 +31,9 @@ import { DialogService } from 'app/services/dialog.service';
     HttpModule,
     Routing,
     ModalModule.forRoot(),
-    BootstrapModalModule
+    BootstrapModalModule,
+    DxTooltipModule,
+    DxTemplateModule
   ],
   providers: [
     AuthGuard,

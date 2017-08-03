@@ -49,7 +49,12 @@ namespace WeText.Services.Accounts.Controllers
 
             if (users.First().Password == password)
             {
-                return Ok();
+                var user = users.First();
+                return Ok(new
+                {
+                    UserName = user.UserName,
+                    DisplayName = user.DisplayName
+                });
             }
 
             return Unauthorized();

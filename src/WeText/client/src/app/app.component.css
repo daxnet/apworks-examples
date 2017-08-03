@@ -9,3 +9,12 @@ footer {
     height: auto;
     margin: -8px;
 }
+
+.navbar-right {
+    margin-right: 0.2em;
+}
+
+.navbar {
+    border-radius: 0px;
+    margin-bottom: 0px;
+}

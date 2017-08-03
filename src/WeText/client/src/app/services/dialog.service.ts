@@ -9,7 +9,7 @@ export class DialogService {
 
   showError(message: string, title: string): void {
     this.modal.alert()
-      .size('lg')
+      .size('sm')
       .showClose(true)
       .title(title)
       .body(`<span class="msg-err"><span class="fa fa-times-circle"></span>&nbsp;${message}</span>`)

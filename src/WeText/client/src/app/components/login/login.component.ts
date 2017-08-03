@@ -25,22 +25,32 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
+    if (!this.userName) {
+      this.dialogService.showError('Please input user name.', 'ERROR');
+      return;
+    }
+
+    if (!this.password) {
+      this.dialogService.showError('Please input password.', 'ERROR');
+      return;
+    }
+
     this.accountService.login(this.userName, this.password)
       .then(response => {
         if (response === true) {
           this.gem.updateCurrentLoginUserName(this.userName);
           this.router.navigate(['']);
         } else {
-          this.dialogService.showError('Error occurs when sign in.', 'Login failed');
+          this.dialogService.showError('Error occurs when sign in.', 'LOGIN FAILED');
         }
       })
       .catch(err => {
         switch (err.status) {
           case 404:
-            this.dialogService.showError('Invalid user name. The specified user does not exist.', 'Login failed');
+            this.dialogService.showError('User does not exist.', 'LOGIN FAILED');
             break;
           case 401:
-            this.dialogService.showError('The provided password is incorrect.', 'Login failed');
+            this.dialogService.showError('Password is incorrect.', 'LOGIN FAILED');
             break;
         }
       });
