@@ -21,6 +21,13 @@ namespace WeText.Services.Accounts.Models
 
         public string DisplayName { get; set; }
 
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Gets or sets the avatar image in a BASE64 format.
+        /// </summary>
+        public string AvatarBase64 { get; set; }
+
         public override string ToString() => this.UserName;
     }
 }

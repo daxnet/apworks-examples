@@ -8,10 +8,10 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class AccountService {
 
-  public currentUser: User;
+  public currentUserName: string;
 
   constructor(private http: Http) {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.currentUserName = localStorage.getItem('currentUserName');
 
   }
 
@@ -25,7 +25,7 @@ export class AccountService {
       .toPromise()
       .then(response => {
         if (response.status === 200) {
-          localStorage.setItem('currentUser', response.text());
+          localStorage.setItem('currentUserName', userName);
           return true;
         } else {
           return false;
@@ -34,15 +34,11 @@ export class AccountService {
   }
 
   logout(): void {
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUserName');
   }
 
   getUserByName(userName: string): Promise<User> {
-    const params = new URLSearchParams();
-    params.append('query', `UserName eq ${userName}`);
-    const options = new RequestOptions({ params: params });
-
-    return this.http.get(`${environment.baseUrl.accountService}api/users`, options)
+    return this.http.get(`${environment.baseUrl.accountService}api/users?query=userName eq "${userName}"`)
       .toPromise()
       .then(response => {
         const result = response.json();

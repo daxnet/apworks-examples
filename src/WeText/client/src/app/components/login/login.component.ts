@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
       .then(response => {
         if (response === true) {
           this.gem.updateCurrentLoginUserName(this.userName);
-          this.router.navigate(['']);
+          this.router.navigate(['home', this.userName]);
         } else {
           this.dialogService.showError('Error occurs when sign in.', 'LOGIN FAILED');
         }

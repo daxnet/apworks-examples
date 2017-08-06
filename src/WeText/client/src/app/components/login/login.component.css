@@ -10,7 +10,7 @@
 
 .jumbotron {
   margin-bottom: 0px;
-  min-height: 450px;
+  min-height: 28.125rem;
   color: white;
   text-shadow: black 0.3em 0.3em 0.3em;
   background:transparent;
@@ -18,7 +18,7 @@
 
 .jumbotron h1 {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 8em;
+    font-size: 6.095238095238095em;
 }
 
 .jumbotron h2 {

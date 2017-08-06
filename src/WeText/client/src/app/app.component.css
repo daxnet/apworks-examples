@@ -5,9 +5,14 @@ footer {
 }
 
 .brand-icon {
-    width: 36px;
+    width: 2.031746031746032em;
     height: auto;
     margin: -8px;
+}
+
+ul.dropdown-menu li {
+    float: left;
+    width: 100%;
 }
 
 .navbar-right {

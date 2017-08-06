@@ -50,11 +50,7 @@ namespace WeText.Services.Accounts.Controllers
             if (users.First().Password == password)
             {
                 var user = users.First();
-                return Ok(new
-                {
-                    UserName = user.UserName,
-                    DisplayName = user.DisplayName
-                });
+                return Ok();
             }
 
             return Unauthorized();

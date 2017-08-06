@@ -24,7 +24,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentUserName = this.accountService.currentUser.userName;
+    if (this.accountService.currentUserName) {
+      this.currentUserName = this.accountService.currentUserName;
+    }
   }
 
   logout(): void {

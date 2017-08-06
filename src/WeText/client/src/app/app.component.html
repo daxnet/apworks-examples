@@ -4,32 +4,28 @@
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
                 aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             <a class="navbar-brand" href="#">
                 <img class="brand-icon" alt="WeText" src="assets/wetext.png" />
             </a>
         </div>
-        <!-- <p *ngIf='currentUserName' class="nav navbar-nav navbar-text navbar-right"> -->
-            <!-- Welcome <a href="#" class="navbar-link">{{currentUserName}}</a>&nbsp;<a href="javascript:void(0)" class="navbar-link" (click)='logout()'>SIGN OUT</a> -->
-            <div *ngIf='currentUserName' class="dropdown nav navbar-nav navbar-text navbar-right">
-                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <span class="fa fa-user"></span>&nbsp; Welcome, {{currentUserName}}!
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#"><span class="fa fa-address-card-o"></span>&nbsp;My Profile</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="javascript:void(0)" (click)='logout()'><span class="fa fa-sign-out"></span>&nbsp;Sign Out</a></li>
-                </ul>
-            </div>
-        <!-- </p> -->
-        <p *ngIf='!currentUserName' class="nav navbar-nav navbar-text navbar-right">
-            <a href="login" class="btn btn-primary"><span class="fa fa-sign-in"></span>&nbsp;Sign In</a>
-        </p>
+            <ul *ngIf='currentUserName' class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="fa fa-user"></span>&nbsp; Welcome, {{currentUserName}}!<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Edit my profile</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="javascript:void(0)" (click)='logout()'>Sign out</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul *ngIf='!currentUserName' class="nav navbar-nav navbar-right">
+                <li><a href="login"><span class="fa fa-sign-in"></span>&nbsp;Sign in</a></li>
+            </ul>
     </div>
 </nav>
 

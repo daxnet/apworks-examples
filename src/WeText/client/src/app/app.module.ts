@@ -18,12 +18,18 @@ import { HomeComponent } from './components/home/home.component';
 import { Routing } from 'app/app.routing';
 import { GlobalEventsManagerService } from 'app/services/global-events-manager.service';
 import { DialogService } from 'app/services/dialog.service';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { PostsComponent } from './components/posts/posts.component';
+import { FriendsComponent } from './components/friends/friends.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    DashboardComponent,
+    PostsComponent,
+    FriendsComponent
   ],
   imports: [
     BrowserModule,
