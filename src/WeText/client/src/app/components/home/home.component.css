@@ -18,13 +18,13 @@ div .site-content {
 }
 
 .sidebar-nav li a {
+    font-size: medium;
     display: block;
     text-decoration: none;
 }
 
 .sidebar-nav li a:hover {
     text-decoration: none;
-    background: #efefef;
 }
 
 .sidebar-nav li a:active,
@@ -35,6 +35,8 @@ div .site-content {
 .sidebar-nav > .sidebar-brand {
     font-size: 1.125rem;
     line-height: 3.75rem;
+    margin-top: 2.2rem;
+    margin-bottom: 2.2rem;
 }
 
 .img-avatar {
@@ -42,4 +44,9 @@ div .site-content {
     border-radius: 50%;
     width: 8rem;
     height: 8rem;
+}
+
+.selected {
+    background-color: #333333;
+    color: #ffffff;
 }

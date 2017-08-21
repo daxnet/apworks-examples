@@ -14,12 +14,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   private user: User;
   private subscriber: Subscription;
   private userName: string;
+  private selectedNavigation: string;
 
   constructor(private accountService: AccountService,
     private route: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.selectedNavigation = 'dashboard';
     this.subscriber = this.route.params.subscribe(params => {
       this.userName = params['uname'];
       this.accountService.getUserByName(this.userName)
@@ -31,4 +33,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscriber.unsubscribe();
   }
 
+  navigate(to: string): void {
+    this.selectedNavigation = to;
+  }
 }

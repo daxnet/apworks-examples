@@ -5,30 +5,25 @@
       <ul class="sidebar-nav">
         <li class="sidebar-brand text-center">
           <img class="img-avatar" src="assets/sunnychen.jpg" alt="Avatar">
-          <h3 *ngIf='user'>{{user.DisplayName}}</h3>
-          <h4>{{userName}}</h4>
+          <h2 *ngIf='user'>{{user.DisplayName}}</h2>
         </li>
         <li>
-          <a [routerLink]="['./dashboard']">Dashboard</a>
+          <a [routerLink]="['./dashboard']" [class.selected]='selectedNavigation==="dashboard"' (click)='navigate("dashboard")'>Dashboard</a>
         </li>
         <li>
-          <a [routerLink]="['./posts']">Posts</a>
+          <a [routerLink]="['./posts']" [class.selected]='selectedNavigation==="posts"' (click)='navigate("posts")'>My Posts</a>
         </li>
         <li>
-          <a [routerLink]="['./friends']">Friends</a>
+          <a [routerLink]="['./friends']" [class.selected]='selectedNavigation==="friends"' (click)='navigate("friends")'>My Friends</a>
         </li>
       </ul>
     </div>
-    <div class="col-sm-4 col-md-6 col-lg-8">
+    <div class="col-sm-4 col-md-5 col-lg-7">
       <div class="row site-content">
-        <!-- <h1>Post a text</h1>
-        <div class="form-group">
-          <input class="form-control" id="inputText" type="text" placeholder="Please type something here...">
-        </div> -->
         <router-outlet></router-outlet>
       </div>
     </div>
-    <div class="col-sm-4 col-md-3 col-lg-2">
+    <div class="col-sm-4 col-md-4 col-lg-3">
     </div>
   </div>
 </div>
