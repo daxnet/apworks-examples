@@ -1,29 +1,21 @@
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-sm-4 col-md-3 col-lg-2">
-      <!-- Sidebar -->
-      <ul class="sidebar-nav">
-        <li class="sidebar-brand text-center">
-          <img class="img-avatar" src="assets/sunnychen.jpg" alt="Avatar">
-          <h2 *ngIf='user'>{{user.DisplayName}}</h2>
-        </li>
-        <li>
-          <a [routerLink]="['./dashboard']" [class.selected]='selectedNavigation==="dashboard"' (click)='navigate("dashboard")'>Dashboard</a>
-        </li>
-        <li>
-          <a [routerLink]="['./posts']" [class.selected]='selectedNavigation==="posts"' (click)='navigate("posts")'>My Posts</a>
-        </li>
-        <li>
-          <a [routerLink]="['./friends']" [class.selected]='selectedNavigation==="friends"' (click)='navigate("friends")'>My Friends</a>
-        </li>
-      </ul>
-    </div>
-    <div class="col-sm-4 col-md-5 col-lg-7">
-      <div class="row site-content">
-        <router-outlet></router-outlet>
+    <div class="col-sm-5 col-md-4 col-lg-3">
+      <div *ngIf='user'>
+        <img class="img-avatar" src="assets/sunnychen.jpg">
+        <h2>{{user.DisplayName}}</h2>
+        <h4>{{user.UserName}}</h4>
       </div>
     </div>
-    <div class="col-sm-4 col-md-4 col-lg-3">
+    <div class="col-sm-7 col-md-8 col-lg-9">
+      <div class="row">
+        <ul class="nav nav-tabs">
+          <li [class.active]='selectedNavigation==="dashboard"'><a [routerLink]="['./dashboard']" (click)='navigate("dashboard")'>Home</a></li>
+          <li [class.active]='selectedNavigation==="posts"'><a [routerLink]="['./posts']" (click)='navigate("posts")'>My Posts</a></li>
+          <li [class.active]='selectedNavigation==="friends"'><a [routerLink]="['./friends']" (click)='navigate("friends")'>My Friends</a></li>
+        </ul>
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
 </div>

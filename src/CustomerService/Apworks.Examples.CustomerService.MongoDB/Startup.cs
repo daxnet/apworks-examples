@@ -54,7 +54,6 @@ namespace Apworks.Examples.CustomerService.MongoDB
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "Documentation.xml");
                 c.IncludeXmlComments(xmlPath);
-                c.IncludeXmlComments(Path.Combine(basePath, "Apworks.Integration.AspNetCore.xml"));
             });
         }
 
