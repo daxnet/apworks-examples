@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:latest
+FROM microsoft/dotnet:2.0.0-runtime
 RUN mkdir /app
 WORKDIR /app
 COPY publish/ ./

@@ -1,49 +1,12 @@
-div .site-content {
-    margin: 0;
-}
-
-/* Sidebar Styles */
-.sidebar-nav {
-    top: 0;
-    width: 25.625rem;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.sidebar-nav li {
-    text-indent: 1.25rem;
-    line-height: 3.5rem;
-}
-
-.sidebar-nav li a {
-    font-size: medium;
-    display: block;
-    text-decoration: none;
-}
-
-.sidebar-nav li a:hover {
-    text-decoration: none;
-}
-
-.sidebar-nav li a:active,
-.sidebar-nav li a:focus {
-    text-decoration: none;
-}
-
-.sidebar-nav > .sidebar-brand {
-    font-size: 1.125rem;
-    line-height: 3.75rem;
-    margin-top: 2.2rem;
-    margin-bottom: 2.2rem;
+.row {
+    margin: 0.75rem 0.5rem auto;
 }
 
 .img-avatar {
-    margin-top: 0.75rem;
-    border-radius: 50%;
-    width: 8rem;
-    height: 8rem;
+    
+    border-radius: 0.625rem;
+    width: 20rem;
+    height: 20rem;
 }
 
 .selected {

@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WeText.Services.Accounts.Controllers
 {
+    /// <summary>
+    /// Represents the controller that manages users.
+    /// </summary>
     public sealed class UsersController : DataServiceController<Guid, User>
     {
         public UsersController(IRepositoryContext repositoryContext)
