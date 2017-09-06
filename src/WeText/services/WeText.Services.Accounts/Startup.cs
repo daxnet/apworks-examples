@@ -13,6 +13,10 @@ using System.IO;
 using Apworks.Integration.AspNetCore;
 using Apworks.Integration.AspNetCore.Configuration;
 using Apworks.Repositories.MongoDB;
+using Apworks.Messaging;
+using Apworks.Serialization.Json;
+using Apworks.Messaging.RabbitMQ;
+using RabbitMQ.Client;
 
 namespace WeText.Services.Accounts
 {
@@ -39,6 +43,13 @@ namespace WeText.Services.Accounts
             var mongoServer = this.Configuration["mongo:server"];
             var mongoPort = Convert.ToInt32(this.Configuration["mongo:port"]);
             var mongoDatabase = this.Configuration["mongo:db"];
+            var rabbitHost = this.Configuration["rabbit:host"];
+            var exchangeName = this.Configuration["rabbit:exchange"];
+
+            services.AddSingleton<IMessageSerializer>(new MessageJsonSerializer())
+                .AddSingleton<IMessageBus>(serviceProvider => new MessageBus(new ConnectionFactory { HostName = rabbitHost }, 
+                    serviceProvider.GetService<IMessageSerializer>(),
+                    exchangeName, ExchangeType.Direct));
 
             services.AddApworks()
                 .WithDataServiceSupport(new DataServiceConfigurationOptions

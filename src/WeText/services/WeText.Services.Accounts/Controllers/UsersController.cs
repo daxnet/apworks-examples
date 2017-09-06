@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using WeText.Services.Accounts.Models;
 using Microsoft.AspNetCore.Mvc;
+using Apworks.Messaging;
+using WeText.Services.Accounts.Events;
 
 namespace WeText.Services.Accounts.Controllers
 {
@@ -13,9 +15,14 @@ namespace WeText.Services.Accounts.Controllers
     /// </summary>
     public sealed class UsersController : DataServiceController<Guid, User>
     {
-        public UsersController(IRepositoryContext repositoryContext)
+        private readonly IMessageBus integrationMessageBus;
+
+        public UsersController(IRepositoryContext repositoryContext,
+            IMessageBus integrationMessageBus)
             : base(repositoryContext)
-        { }
+        {
+            this.integrationMessageBus = integrationMessageBus;
+        }
 
         public override Task<IActionResult> Post([FromBody] User aggregateRoot)
         {
@@ -47,15 +54,19 @@ namespace WeText.Services.Accounts.Controllers
             var users = (await this.Repository.FindAllAsync(x => x.UserName == userName)).ToList();
             if (users == null || users.Count == 0)
             {
-                throw new EntityNotFoundException($"The user with the user name '{userName}' does not exist.");
+                var errorMessage = $"The user with the user name '{userName}' does not exist.";
+                this.integrationMessageBus.Publish(new AccountAuthenticatedEvent(userName, false, errorMessage));
+                throw new EntityNotFoundException(errorMessage);
             }
 
             if (users.First().Password == password)
             {
                 var user = users.First();
+                this.integrationMessageBus.Publish(new AccountAuthenticatedEvent(userName, true));
                 return Ok();
             }
 
+            this.integrationMessageBus.Publish(new AccountAuthenticatedEvent(userName, false, "Incorrect password."));
             return Unauthorized();
         }
     }
