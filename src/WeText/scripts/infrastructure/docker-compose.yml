@@ -7,4 +7,14 @@ services:
         container_name: mongodb
         ports:
             - "27017:27017"
+    rabbit:
+        image: rabbitmq:3-management
+        ports:
+            - "5672:5672"
+            - "4369:4369"
+            - "5671:5671"
+            - "25672:25672"
+            - "15672:15672"
+        container_name: rabbitmq
+        hostname: my-rabbitmq
 
