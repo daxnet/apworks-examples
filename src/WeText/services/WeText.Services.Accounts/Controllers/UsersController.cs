@@ -55,19 +55,25 @@ namespace WeText.Services.Accounts.Controllers
             if (users == null || users.Count == 0)
             {
                 var errorMessage = $"The user with the user name '{userName}' does not exist.";
-                this.integrationMessageBus.Publish(new AccountAuthenticatedEvent(userName, false, errorMessage));
+                await this.PublishMessageAsync(new AccountAuthenticatedEvent(userName, false, errorMessage));
                 throw new EntityNotFoundException(errorMessage);
             }
 
             if (users.First().Password == password)
             {
                 var user = users.First();
-                this.integrationMessageBus.Publish(new AccountAuthenticatedEvent(userName, true));
+                await this.PublishMessageAsync(new AccountAuthenticatedEvent(userName, true));
                 return Ok();
             }
 
-            this.integrationMessageBus.Publish(new AccountAuthenticatedEvent(userName, false, "Incorrect password."));
+            await this.PublishMessageAsync(new AccountAuthenticatedEvent(userName, false, "Incorrect password."));
             return Unauthorized();
+        }
+
+        private async Task PublishMessageAsync<TMessage>(TMessage msg)
+            where TMessage : IMessage
+        {
+            await this.integrationMessageBus.PublishAsync(msg, "wetext.integration");
         }
     }
 }

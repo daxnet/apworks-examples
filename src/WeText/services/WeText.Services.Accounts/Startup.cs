@@ -49,7 +49,7 @@ namespace WeText.Services.Accounts
             services.AddSingleton<IMessageSerializer>(new MessageJsonSerializer())
                 .AddSingleton<IMessageBus>(serviceProvider => new MessageBus(new ConnectionFactory { HostName = rabbitHost }, 
                     serviceProvider.GetService<IMessageSerializer>(),
-                    exchangeName, ExchangeType.Direct));
+                    exchangeName, ExchangeType.Topic));
 
             services.AddApworks()
                 .WithDataServiceSupport(new DataServiceConfigurationOptions

@@ -3,13 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WeText.Services.Shared.Events;
 
 namespace WeText.Services.Accounts.Events
 {
     /// <summary>
     /// Represents the event that occurs when an account has been authenticated.
     /// </summary>
-    public sealed class AccountAuthenticatedEvent : Event
+    public sealed class AccountAuthenticatedEvent : IntegrationEvent
     {
         public AccountAuthenticatedEvent() { }
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WeText.Services.Auditing.Controllers
-{
+{/*
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
@@ -40,5 +40,6 @@ namespace WeText.Services.Auditing.Controllers
         public void Delete(int id)
         {
         }
-    }
+    }*/
+
 }
