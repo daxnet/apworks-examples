@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+      <h1>SIGN UP</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-5 col-md-4 col-lg-3 text-center">
+      <img class="img-avatar" [src]="avatarSrc" />
+      <button type="button" id="btnChangeAvatar" name="btnChangeAvatar" class="btn btn-default">CHANGE AVATAR</button>
+    </div>
+    <div class="col-sm-6 col-md-5 col-lg-4">
+      <form>
+        <div class="form-group">
+          <label for="txtUserName">User Name</label>
+          <input type="text" class="form-control" id="txtUserName" name="txtUserName" placeholder="User Name" [(ngModel)]='model.userName'>
+        </div>
+        <div class="form-group">
+          <label for="txtNickName">Nick Name</label>
+          <input type="text" class="form-control" id="txtNickName" name="txtNickName" placeholder="Nick Name" [(ngModel)]='model.nickName'>
+        </div>
+        <div class="form-group">
+          <label for="txtPassword">Password</label>
+          <input type="password" class="form-control" id="txtPassword" name="txtPassword" placeholder="Password" [(ngModel)]='model.password'>
+        </div>
+        <div class="form-group">
+          <label for="txtPasswordConfirm">Confirm Password</label>
+          <input type="password" class="form-control" id="txtPasswordConfirm" name="txtPasswordConfirm" placeholder="Confirm Password"
+            [(ngModel)]='model.confirmPassword'>
+        </div>
+        <div class="form-group">
+          <label for="txtEmail">Email</label>
+          <input type="email" class="form-control" id="txtEmail" name="txtEmail" placeholder="Email" [(ngModel)]='model.email'>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-default" (click)='submit()'>SUBMIT</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

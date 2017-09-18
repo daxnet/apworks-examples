@@ -1,0 +1,9 @@
+.img-avatar {
+    border-radius: 0.625rem;
+    width: 20rem;
+    height: 20rem;
+}
+
+#btnChangeAvatar {
+    margin-top: 0.5rem;
+}

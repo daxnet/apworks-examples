@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Apworks.Messaging.RabbitMQ;
 using RabbitMQ.Client;
 using Apworks.Serialization.Json;
@@ -16,6 +11,8 @@ using WeText.Services.Shared.Events;
 using Apworks.Repositories;
 using Apworks.Repositories.EntityFramework;
 using WeText.Services.Auditing.Models;
+using Apworks.Integration.AspNetCore;
+using Apworks.Integration.AspNetCore.Configuration;
 
 namespace WeText.Services.Auditing
 {
@@ -35,20 +32,24 @@ namespace WeText.Services.Auditing
         {
             services.AddMvc();
 
-            services.AddScoped<AuditingDataContext>();
-            services.AddScoped<IRepositoryContext>(provider => new EntityFrameworkRepositoryContext(provider.GetService<AuditingDataContext>()));
-
             var rabbitHost = this.Configuration["rabbit:host"];
             var exchangeName = this.Configuration["rabbit:exchange"];
+            var queueName = this.Configuration["rabbit:queue"];
             var connectionFactory = new ConnectionFactory { HostName = rabbitHost };
             var messageSerializer = new MessageJsonSerializer();
-            
-            var messageBus = new MessageBus(connectionFactory, messageSerializer,
-                exchangeName, ExchangeType.Topic);
-            messageBus.MessageReceived += MessageBus_MessageReceived;
-            messageBus.Subscribe("wetext.*");
+
+            services.AddScoped<AuditingDataContext>();
+            services.AddApworks()
+                .WithDataServiceSupport(new DataServiceConfigurationOptions(sp => 
+                    new EntityFrameworkRepositoryContext(sp.GetService<AuditingDataContext>())))
+                .Configure();
 
             this.serviceProvider = services.BuildServiceProvider();
+
+            var messageBus = new MessageBus(connectionFactory, messageSerializer,
+                exchangeName, ExchangeType.Topic, queueName);
+            messageBus.MessageReceived += MessageBus_MessageReceived;
+            messageBus.Subscribe("wetext.*");
         }
 
         private void MessageBus_MessageReceived(object sender, MessageReceivedEventArgs e)
@@ -88,6 +89,8 @@ namespace WeText.Services.Auditing
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.EnrichDataServiceExceptionResponse();
 
             app.UseMvc();
         }
