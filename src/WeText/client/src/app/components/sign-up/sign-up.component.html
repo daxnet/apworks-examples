@@ -19,26 +19,30 @@
     </div>
     <div class="col-sm-6 col-md-5 col-lg-4">
       <form>
-        <div class="form-group">
+        <div class="form-group" [class.has-error]="validate && !validationModel.validUserName">
           <label for="txtUserName">User Name</label>
-          <input type="text" class="form-control" id="txtUserName" name="txtUserName" placeholder="User Name" [(ngModel)]='model.userName'>
+          <input type="text" class="form-control" id="txtUserName" name="txtUserName" placeholder="User Name" [(ngModel)]='model.userName' (blur)='validateModel()'>
+          <span class="text-danger" *ngIf='validate'>{{validationModel.userNameValidationMessage}}</span>
         </div>
         <div class="form-group">
           <label for="txtNickName">Nick Name</label>
           <input type="text" class="form-control" id="txtNickName" name="txtNickName" placeholder="Nick Name" [(ngModel)]='model.nickName'>
         </div>
-        <div class="form-group">
+        <div class="form-group" [class.has-error]="validate && !validationModel.validPassword">
           <label for="txtPassword">Password</label>
-          <input type="password" class="form-control" id="txtPassword" name="txtPassword" placeholder="Password" [(ngModel)]='model.password'>
+          <input type="password" class="form-control" id="txtPassword" name="txtPassword" placeholder="Password" [(ngModel)]='model.password' (blur)='validateModel()'>
+          <span class="text-danger" *ngIf='validate'>{{validationModel.passwordValidationMessage}}</span>
         </div>
-        <div class="form-group">
+        <div class="form-group" [class.has-error]="validate && !validationModel.validConfirmPassword">
           <label for="txtPasswordConfirm">Confirm Password</label>
           <input type="password" class="form-control" id="txtPasswordConfirm" name="txtPasswordConfirm" placeholder="Confirm Password"
-            [(ngModel)]='model.confirmPassword'>
+            [(ngModel)]='model.confirmPassword' (blur)='validateModel()'>
+            <span class="text-danger" *ngIf='validate'>{{validationModel.confirmPasswordValidationMessage}}</span>
         </div>
-        <div class="form-group">
+        <div class="form-group" [class.has-error]="validate && !validationModel.validEmail">
           <label for="txtEmail">Email</label>
-          <input type="email" class="form-control" id="txtEmail" name="txtEmail" placeholder="Email" [(ngModel)]='model.email'>
+          <input type="email" class="form-control" id="txtEmail" name="txtEmail" placeholder="Email" [(ngModel)]='model.email' (blur)='validateModel()'>
+          <span class="text-danger" *ngIf='validate'>{{validationModel.emailValidationMessage}}</span>
         </div>
         <div>
           <button type="submit" class="btn btn-default" (click)='submit()'>SUBMIT</button>

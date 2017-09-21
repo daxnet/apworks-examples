@@ -1,12 +1,12 @@
-﻿using Apworks.Integration.AspNetCore.DataServices;
-using Apworks.Repositories;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using WeText.Services.Accounts.Models;
-using Microsoft.AspNetCore.Mvc;
-using Apworks.Messaging;
+﻿using WeText.Services.Accounts.Models;
 using WeText.Services.Accounts.Events;
+using Apworks.Integration.AspNetCore.DataServices;
+using System;
+using Apworks.Messaging;
+using Apworks.Repositories;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace WeText.Services.Accounts.Controllers
 {
