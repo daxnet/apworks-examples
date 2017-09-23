@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SignUpModel, DEFAULT_AVATAR_BASE64 } from 'app/models/sign-up-model';
-import { DomSanitizer } from '@angular/platform-browser';
+import { SignUpModel } from 'app/models/sign-up-model';
 import { SignUpValidationModel } from 'app/models/sign-up-validation-model';
+import { DialogService } from 'app/services/dialog.service';
+import { AccountService } from 'app/services/account.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,20 +14,26 @@ export class SignUpComponent implements OnInit {
   model: SignUpModel = new SignUpModel();
   validationModel: SignUpValidationModel = new SignUpValidationModel();
   validate = false;
+  avatarColor: string;
 
-  constructor(private sanitizer: DomSanitizer) { }
+  constructor(private dialogService: DialogService,
+    private accountService: AccountService) { }
 
   ngOnInit() {
-    this.model.avatarBase64 = DEFAULT_AVATAR_BASE64;
-  }
-
-  get avatarSrc() {
-    return this.sanitizer.bypassSecurityTrustUrl(`data:image/png;base64,${this.model.avatarBase64}`);
+    this.avatarColor = this.getRandomColor();
   }
 
   submit(): void {
     this.validate = true;
-    this.validateModel();
+    if (this.validateModel()) {
+      this.model.avatarBackgroundColor = this.avatarColor;
+      this.accountService.signUp(this.model)
+        .then(user => this.dialogService.showSuccess(`User "${user.userName}" has been created successfully.`, 'SUCCESS', 'lg'))
+        .catch(err => {
+          console.log(err);
+          this.dialogService.showError('Failed to create user.', 'FAILED', 'sm');
+        })
+    }
   }
 
 
@@ -87,6 +94,15 @@ export class SignUpComponent implements OnInit {
       this.validationModel.emailValidationMessage = '';
     }
 
-    return hasError;
+    return !hasError;
+  }
+
+  private getRandomColor(): string {
+    const letters = '0123456789ABCDEF'.split('');
+    let color = '#';
+    for ( let i = 0; i < 6; i++ ) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
   }
 }

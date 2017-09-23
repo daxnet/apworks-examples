@@ -22,6 +22,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PostsComponent } from './components/posts/posts.component';
 import { FriendsComponent } from './components/friends/friends.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { AvatarModule } from 'ng2-avatar';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
     Routing,
     ModalModule.forRoot(),
     BootstrapModalModule,
+    AvatarModule.forRoot(),
     DxTooltipModule,
     DxTemplateModule
   ],
