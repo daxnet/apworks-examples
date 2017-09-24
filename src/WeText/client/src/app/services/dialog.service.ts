@@ -7,16 +7,16 @@ export class DialogService {
 
   constructor(private modal: Modal) { }
 
-  showError(message: string, title: string, size: any = 'sm'): void {
-    this.show(message, title, 'msg-err', 'fa-times-circle', size);
+  showError(message: string, title: string, size: any = 'sm'): Promise<any> {
+    return this.show(message, title, 'msg-err', 'fa-times-circle', size);
   }
 
-  showSuccess(message: string, title: string, size: any = 'sm'): void {
-    this.show(message, title, 'msg-success', 'fa-check-circle', size);
+  showSuccess(message: string, title: string, size: any = 'sm'): Promise<any> {
+    return this.show(message, title, 'msg-success', 'fa-check-circle', size);
   }
 
-  private show(message: string, title: string, cls: string, icon: string, size: any = 'sm'): void {
-    this.modal.alert()
+  private show(message: string, title: string, cls: string, icon: string, size: any = 'sm'): Promise<any> {
+    return this.modal.alert()
     .size(size)
     .showClose(true)
     .title(title)

@@ -3,6 +3,8 @@ import { SignUpModel } from 'app/models/sign-up-model';
 import { SignUpValidationModel } from 'app/models/sign-up-validation-model';
 import { DialogService } from 'app/services/dialog.service';
 import { AccountService } from 'app/services/account.service';
+import { Router } from '@angular/router';
+import { GlobalEventsManagerService } from 'app/services/global-events-manager.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,25 +19,46 @@ export class SignUpComponent implements OnInit {
   avatarColor: string;
 
   constructor(private dialogService: DialogService,
-    private accountService: AccountService) { }
+    private accountService: AccountService,
+    private router: Router,
+    private gem: GlobalEventsManagerService) { }
 
   ngOnInit() {
     this.avatarColor = this.getRandomColor();
   }
 
+  /**
+   * Submits the new user registration request.
+   *
+   * @memberof SignUpComponent
+   */
   submit(): void {
     this.validate = true;
     if (this.validateModel()) {
       this.model.avatarBackgroundColor = this.avatarColor;
       this.accountService.signUp(this.model)
-        .then(user => this.dialogService.showSuccess(`User "${user.userName}" has been created successfully.`, 'SUCCESS', 'lg'))
-        .catch(err => {
-          console.log(err);
-          this.dialogService.showError('Failed to create user.', 'FAILED', 'sm');
+        .then(user => {
+          this.dialogService.showSuccess(`User "${user.userName}" has been created successfully.`, 'SUCCESS', 'lg')
+            .then(dialogRef => dialogRef.result.then(result => {
+              this.accountService.login(this.model.userName, this.model.password)
+                .then(response => {
+                  if (response) {
+                    this.gem.updateCurrentLoginUserName(this.model.userName);
+                    this.router.navigate(['home', this.model.userName]);
+                  }
+                });
+            }));
         })
+        .catch(err => {
+          if (err.status === 409) {
+            this.dialogService.showError('User name or email already exists.', 'FAILED', 'lg');
+          } else {
+            console.log(err);
+            this.dialogService.showError('Failed to create user.', 'FAILED', 'lg');
+          }
+        });
     }
   }
-
 
   /**
    * Validates the sign up model. This is a very stupid solution to validate

@@ -7,6 +7,7 @@ using Apworks.Repositories;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Net;
 
 namespace WeText.Services.Accounts.Controllers
 {
@@ -24,10 +25,22 @@ namespace WeText.Services.Accounts.Controllers
             this.integrationMessageBus = integrationMessageBus;
         }
 
-        public override Task<IActionResult> Post([FromBody] User aggregateRoot)
+        public override async Task<IActionResult> Post([FromBody] User aggregateRoot)
         {
+            var userNameExists = await this.Repository.ExistsAsync(x => x.UserName == aggregateRoot.UserName);
+            if (userNameExists)
+            {
+                throw new EntityAlreadyExistsException($"User with the user name '{aggregateRoot.UserName}' already exists.");
+            }
+
+            var emailExists = await this.Repository.ExistsAsync(x => x.Email == aggregateRoot.Email);
+            if (emailExists)
+            {
+                throw new EntityAlreadyExistsException($"User with the email of '{aggregateRoot.Email}' already exists.");
+            }
+
             aggregateRoot.DateRegistered = DateTime.UtcNow;
-            return base.Post(aggregateRoot);
+            return await base.Post(aggregateRoot);
         }
 
         /// <summary>
