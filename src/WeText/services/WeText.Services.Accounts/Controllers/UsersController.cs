@@ -40,7 +40,11 @@ namespace WeText.Services.Accounts.Controllers
             }
 
             aggregateRoot.DateRegistered = DateTime.UtcNow;
-            return await base.Post(aggregateRoot);
+            
+            var actionResult = await base.Post(aggregateRoot);
+            await this.PublishMessageAsync<AccountCreatedEvent>(new AccountCreatedEvent(aggregateRoot.UserName, aggregateRoot.DisplayName, aggregateRoot.Email));
+
+            return actionResult;
         }
 
         /// <summary>

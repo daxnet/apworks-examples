@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WeText.Services.Auditing.Models;
+using WeText.Services.Auditing.Events;
 
 namespace WeText.Services.Auditing
 {

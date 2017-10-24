@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WeText.Services.Auditing.Models
+namespace WeText.Services.Auditing.Events
 {
     public sealed class EventItem : IAggregateRoot<Guid>
     {
