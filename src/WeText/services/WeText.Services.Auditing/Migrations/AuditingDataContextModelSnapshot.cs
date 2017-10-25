@@ -21,30 +21,29 @@ namespace WeText.Services.Auditing.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452");
 
-            modelBuilder.Entity("WeText.Services.Auditing.Models.EventItem", b =>
+            modelBuilder.Entity("WeText.Services.Auditing.Models.Authentication", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("uuid_generate_v4()");
 
-                    b.Property<Guid>("EventId");
-
-                    b.Property<string>("Intent")
+                    b.Property<string>("AccountName")
                         .IsRequired()
-                        .HasMaxLength(255)
+                        .HasMaxLength(256)
                         .IsUnicode(true);
 
-                    b.Property<bool>("IsIntegration");
-
-                    b.Property<string>("Payload")
+                    b.Property<string>("FailReason")
                         .IsRequired()
+                        .HasMaxLength(1024)
                         .IsUnicode(true);
 
-                    b.Property<DateTime>("Timestamp");
+                    b.Property<bool>("Succeeded");
+
+                    b.Property<DateTime>("TimeOfAuthentication");
 
                     b.HasKey("Id");
 
-                    b.ToTable("EventItems");
+                    b.ToTable("Authentications");
                 });
 #pragma warning restore 612, 618
         }

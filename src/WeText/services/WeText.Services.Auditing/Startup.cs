@@ -9,7 +9,6 @@ using Apworks.Serialization.Json;
 using Apworks.Messaging;
 using Apworks.Repositories;
 using Apworks.Repositories.EntityFramework;
-using WeText.Services.Auditing.Events;
 using Apworks.Integration.AspNetCore;
 using Apworks.Integration.AspNetCore.Configuration;
 using System.Collections.Generic;
@@ -71,33 +70,6 @@ namespace WeText.Services.Auditing
              select handler)
             .ToList()
             .ForEach(async h => await h.HandleAsync(@event));
-
-            //bool.TryParse(e.Message.Metadata[IntegrationEvent.IntegrationEventMetadataKey]?.ToString(), out bool isIntegrationEvent);
-            //Guid.TryParse(e.Message.Id.ToString(), out Guid eventId);
-            //DateTime.TryParse(e.Message.Timestamp.ToString(), out DateTime eventTimestamp);
-            //// var intent = e.Message.Metadata["$apworks:event.intent"].ToString();
-            //var payload = e.Message.ToString();
-
-            //var item = new EventItem
-            //{
-            //    EventId = eventId,
-            //    Intent = intent,
-            //    IsIntegration = isIntegrationEvent,
-            //    Payload = payload,
-            //    Timestamp = eventTimestamp
-            //};
-
-            //try
-            //{
-            //    var repositoryContext = this.serviceProvider.GetService<IRepositoryContext>();
-            //    var repository = repositoryContext.GetRepository<Guid, EventItem>();
-            //    repository.Add(item);
-            //    repositoryContext.Commit();
-            //}
-            //catch
-            //{
-            //    // TODO: add log here and prevent the program from exit unexpectly.
-            //}
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
