@@ -43,7 +43,7 @@ namespace WeText.Services.Auditing
 
             services.AddScoped<AuditingDataContext>()
                 .AddEventHandler(sp => new AccountAuthenticatedEventHandler(sp.GetService<IRepositoryContext>()))
-                .AddEventHandler(sp => new AccountCreatedEventHandler())
+                //.AddEventHandler(sp => new AccountCreatedEventHandler())
                 .AddApworks()
                 .WithDataServiceSupport(new DataServiceConfigurationOptions(sp => 
                     new EntityFrameworkRepositoryContext(sp.GetService<AuditingDataContext>())))

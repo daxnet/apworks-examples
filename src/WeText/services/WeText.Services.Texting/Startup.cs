@@ -34,17 +34,17 @@ namespace WeText.Services.Texting
             // Add framework services.
             services.AddMvc();
 
-            var messageSerializer = new MessageJsonSerializer();
+            //var messageSerializer = new MessageJsonSerializer();
 
-            var integrationMessageBusHost = this.Configuration["rabbit.integration:host"];
-            var integrationExchangeName = this.Configuration["rabbit.integration:exchange"];
-            var integrationMessageQueue = this.Configuration["rabbit.integration:queue"];
+            //var integrationMessageBusHost = this.Configuration["rabbit.integration:host"];
+            //var integrationExchangeName = this.Configuration["rabbit.integration:exchange"];
+            //var integrationMessageQueue = this.Configuration["rabbit.integration:queue"];
 
-            var integrationMessageBus = new MessageBus(new ConnectionFactory { HostName = integrationMessageBusHost },
-                messageSerializer, integrationExchangeName, ExchangeType.Topic, integrationMessageQueue);
+            //var integrationMessageBus = new MessageBus(new ConnectionFactory { HostName = integrationMessageBusHost },
+            //    messageSerializer, integrationExchangeName, ExchangeType.Topic, integrationMessageQueue);
 
-            integrationMessageBus.MessageReceived += IntegrationMessageBus_MessageReceived;
-            integrationMessageBus.Subscribe("wetext.*");
+            //integrationMessageBus.MessageReceived += IntegrationMessageBus_MessageReceived;
+            //integrationMessageBus.Subscribe("wetext.*");
         }
 
         private void IntegrationMessageBus_MessageReceived(object sender, MessageReceivedEventArgs e)
