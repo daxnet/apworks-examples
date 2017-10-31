@@ -20,9 +20,7 @@ using System.Linq;
 namespace WeText.Services.Auditing
 {
     public class Startup
-    {
-        private IServiceProvider serviceProvider;
-
+    { 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -42,34 +40,30 @@ namespace WeText.Services.Auditing
             var messageSerializer = new MessageJsonSerializer();
 
             services.AddScoped<AuditingDataContext>()
-                .AddEventHandler(sp => new AccountAuthenticatedEventHandler(sp.GetService<IRepositoryContext>()))
-                //.AddEventHandler(sp => new AccountCreatedEventHandler())
+                .AddScoped<IEventSubscriber>(x => new EventBus(connectionFactory, messageSerializer, exchangeName, ExchangeType.Topic, queueName))
+                .AddScoped<IEventHandler>(x => new AccountAuthenticatedEventHandler(x.GetService<IRepositoryContext>()))
+                .AddScoped<IEventConsumer>(x =>
+                {
+                    var handlers = x.GetServices<IEventHandler>();
+                    return new EventConsumer(x.GetService<IEventSubscriber>(), handlers, "wetext.*");
+                })
                 .AddApworks()
-                .WithDataServiceSupport(new DataServiceConfigurationOptions(sp => 
+                .WithDataServiceSupport(new DataServiceConfigurationOptions(sp =>
                     new EntityFrameworkRepositoryContext(sp.GetService<AuditingDataContext>())))
                 .Configure();
 
-            this.serviceProvider = services.BuildServiceProvider();
-            
-            var messageBus = new MessageBus(connectionFactory, messageSerializer,
-                exchangeName, ExchangeType.Topic, queueName);
-            messageBus.MessageReceived += MessageBus_MessageReceived;
-            messageBus.Subscribe("wetext.*");
-        }
+            //var eventSubscriber = new EventBus(connectionFactory, messageSerializer, exchangeName, ExchangeType.Topic, queueName);
+            //var eventHandlers = new IEventHandler[] { new AccountAuthenticatedEventHandler(services.BuildServiceProvider().GetService<IRepositoryContext>()) };
+            //var eventConsumer = new EventConsumer(eventSubscriber, eventHandlers, "wetext.*");
+            //eventSubscriber.MessageReceived += (x, y) =>
+            //  {
+            //      var message = y.Message;
+            //  };
 
-        private void MessageBus_MessageReceived(object sender, MessageReceivedEventArgs e)
-        {
-            var eventHandlers = this.serviceProvider.GetServices<IIntentionalEventHandler>();
+            //eventSubscriber.Subscribe("wetext.*");
 
-            var @event = (IDictionary<string, object>)e.Message;
-            var eventMetadata = (IDictionary<string, object>)@event["Metadata"];
-            var intent = eventMetadata["$apworks:event.intent"].ToString();
-
-            (from handler in eventHandlers
-             where handler.HandlingIntention.Equals(intent)
-             select handler)
-            .ToList()
-            .ForEach(async h => await h.HandleAsync(@event));
+            // Resolve the event consumer
+            var consumer = services.BuildServiceProvider().GetService<IEventConsumer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

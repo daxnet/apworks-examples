@@ -1,5 +1,5 @@
 ﻿using WeText.Services.Accounts.Models;
-using WeText.Services.Accounts.Events;
+using WeText.Services.Shared.Events;
 using Apworks.Integration.AspNetCore.DataServices;
 using System;
 using Apworks.Messaging;

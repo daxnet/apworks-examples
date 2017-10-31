@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
 using Apworks.Repositories;
-using WeText.Services.Shared;
 using WeText.Services.Auditing.Models;
+using WeText.Services.Shared.Events;
 
 namespace WeText.Services.Auditing.EventHandlers
 {
     /// <summary>
     /// Represents the event handler that handles the AccountAuthenticatedEvent.
     /// </summary>
-    /// <seealso cref="WeText.Services.Shared.IntentionalEventHandler" />
-    public class AccountAuthenticatedEventHandler : IntentionalEventHandler
+    public class AccountAuthenticatedEventHandler : Apworks.Events.EventHandler<AccountAuthenticatedEvent>
     {
         private readonly IRepositoryContext repositoryContext;
         private readonly IRepository<Guid, Authentication> authenticationRepository;
@@ -28,28 +27,19 @@ namespace WeText.Services.Auditing.EventHandlers
         }
 
         /// <summary>
-        /// Gets a <see cref="T:System.String" /> value which indicates the intention
-        /// of the event that will be handled by the current event handler.
+        /// Handles the asynchronous.
         /// </summary>
-        /// <value>
-        /// The handling intention.
-        /// </value>
-        public override string HandlingIntention => "AccountAuthenticatedEvent";
-
-        /// <summary>
-        /// Handles the message asynchronously.
-        /// </summary>
-        /// <param name="eventData">The event data.</param>
+        /// <param name="message">The message.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        protected override async Task<bool> HandleMessageAsync(IDictionary<string, object> eventData, CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<bool> HandleAsync(AccountAuthenticatedEvent message, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var accountName = (string)eventData["AccountName"];
-                var timestamp = (DateTime)eventData["Timestamp"];
-                var reason = (string)eventData["Reason"];
-                var succeeded = (bool)eventData["IsSuccess"];
+                var accountName = message.AccountName;
+                var timestamp = message.Timestamp;
+                var reason = message.Reason;
+                var succeeded = message.IsSuccess;
 
                 var authentication = new Authentication
                 {
