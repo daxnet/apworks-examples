@@ -26,6 +26,7 @@
     "devextreme-angular": "^17.1.4",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
+    "ng2-avatar": "^2.0.6",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
   },

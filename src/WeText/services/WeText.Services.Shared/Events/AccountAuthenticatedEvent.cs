@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WeText.Services.Accounts.Events
+namespace WeText.Services.Shared.Events
 {
     /// <summary>
     /// Represents the event that occurs when an account has been authenticated.

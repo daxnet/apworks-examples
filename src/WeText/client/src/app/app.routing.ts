@@ -5,11 +5,13 @@ import { AuthGuard } from 'app/guards/auth.guard';
 import { DashboardComponent } from 'app/components/dashboard/dashboard.component';
 import { PostsComponent } from 'app/components/posts/posts.component';
 import { FriendsComponent } from 'app/components/friends/friends.component';
+import { SignUpComponent } from 'app/components/sign-up/sign-up.component';
 
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
+    { path: 'sign-up', component: SignUpComponent },
     {
         path: 'home/:uname',
         component: HomeComponent,

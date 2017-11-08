@@ -21,6 +21,8 @@ import { DialogService } from 'app/services/dialog.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PostsComponent } from './components/posts/posts.component';
 import { FriendsComponent } from './components/friends/friends.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { AvatarModule } from 'ng2-avatar';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { FriendsComponent } from './components/friends/friends.component';
     HomeComponent,
     DashboardComponent,
     PostsComponent,
-    FriendsComponent
+    FriendsComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,7 @@ import { FriendsComponent } from './components/friends/friends.component';
     Routing,
     ModalModule.forRoot(),
     BootstrapModalModule,
+    AvatarModule.forRoot(),
     DxTooltipModule,
     DxTemplateModule
   ],

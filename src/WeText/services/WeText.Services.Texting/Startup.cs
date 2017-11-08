@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Apworks.Messaging.RabbitMQ;
+using RabbitMQ.Client;
+using Apworks.Serialization.Json;
+using Apworks.Messaging;
 
 namespace WeText.Services.Texting
 {
@@ -21,7 +25,7 @@ namespace WeText.Services.Texting
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
-
+        
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
