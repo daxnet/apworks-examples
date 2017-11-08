@@ -17,4 +17,12 @@ services:
             - "15672:15672"
         container_name: rabbitmq
         hostname: my-rabbitmq
-
+        volumes:
+            - ${RABBITMQ_DATA_VOLUME}
+    postgres:
+        image: postgres
+        ports:
+            - "5432:5432"
+        container_name: postgres
+        volumes:
+            - ${POSTGRESQL_DATA_VOLUME}
