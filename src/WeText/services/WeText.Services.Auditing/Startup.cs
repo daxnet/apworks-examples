@@ -20,7 +20,9 @@ using System.Linq;
 namespace WeText.Services.Auditing
 {
     public class Startup
-    { 
+    {
+        private IEventConsumer eventConsumer;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -39,43 +41,35 @@ namespace WeText.Services.Auditing
             var connectionFactory = new ConnectionFactory { HostName = rabbitHost };
             var messageSerializer = new MessageJsonSerializer();
 
-            services.AddScoped<AuditingDataContext>()
-                .AddScoped<IEventSubscriber>(x => new EventBus(connectionFactory, messageSerializer, exchangeName, ExchangeType.Topic, queueName))
-                .AddScoped<IEventHandler>(x => new AccountAuthenticatedEventHandler(x.GetService<IRepositoryContext>()))
-                .AddScoped<IEventConsumer>(x =>
-                {
-                    var handlers = x.GetServices<IEventHandler>();
-                    return new EventConsumer(x.GetService<IEventSubscriber>(), handlers, "wetext.*");
-                })
+            services
                 .AddApworks()
+                .WithEventSubscriber(x => new EventBus(connectionFactory, messageSerializer, exchangeName, ExchangeType.Topic, queueName))
+                .WithDefaultEventConsumer("wetext.*")
+                .AddEventHandler(x=> new AccountAuthenticatedEventHandler(x.GetService<IRepositoryContext>()))
                 .WithDataServiceSupport(new DataServiceConfigurationOptions(sp =>
-                    new EntityFrameworkRepositoryContext(sp.GetService<AuditingDataContext>())))
+                    new EntityFrameworkRepositoryContext(new AuditingDataContext())))
                 .Configure();
 
-            //var eventSubscriber = new EventBus(connectionFactory, messageSerializer, exchangeName, ExchangeType.Topic, queueName);
-            //var eventHandlers = new IEventHandler[] { new AccountAuthenticatedEventHandler(services.BuildServiceProvider().GetService<IRepositoryContext>()) };
-            //var eventConsumer = new EventConsumer(eventSubscriber, eventHandlers, "wetext.*");
-            //eventSubscriber.MessageReceived += (x, y) =>
-            //  {
-            //      var message = y.Message;
-            //  };
+            var serviceProvider = services.BuildServiceProvider();
 
-            //eventSubscriber.Subscribe("wetext.*");
-
-            // Resolve the event consumer
-            var consumer = services.BuildServiceProvider().GetService<IEventConsumer>();
+            this.eventConsumer = serviceProvider.GetService<IEventConsumer>();
+            this.eventConsumer.Consume();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
         {
+            applicationLifetime.ApplicationStopping.Register(() =>
+            {
+                this.eventConsumer.Dispose();
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
             app.EnrichDataServiceExceptionResponse();
-
             app.UseMvc();
         }
     }

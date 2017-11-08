@@ -7,14 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using Apworks.Repositories;
 using Apworks.Integration.AspNetCore.DataServices;
 using WeText.Services.Auditing.Models;
+using Apworks.Events;
 
 namespace WeText.Services.Auditing.Controllers
 {
     [Produces("application/json")]
     [Route("api/authentications")]
-    public class EventsController : DataServiceController<Guid, Authentication>
+    public class AuthenticationsController : DataServiceController<Guid, Authentication>
     {
-        public EventsController(IRepositoryContext repositoryContext) : base(repositoryContext)
+        public AuthenticationsController(IRepositoryContext repositoryContext) : base(repositoryContext)
         {
         }
     }
