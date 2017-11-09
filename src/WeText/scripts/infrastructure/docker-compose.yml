@@ -26,3 +26,13 @@ services:
         container_name: postgres
         volumes:
             - ${POSTGRESQL_DATA_VOLUME}
+
+    mssql:
+        image: microsoft/mssql-server-linux:2017-latest
+        ports:
+            - "1433:1433"
+        container_name: mssql
+        environment:
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD=G1veMeP@ss
+
