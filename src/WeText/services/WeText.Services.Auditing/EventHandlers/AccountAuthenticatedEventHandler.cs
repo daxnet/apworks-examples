@@ -11,7 +11,7 @@ namespace WeText.Services.Auditing.EventHandlers
     /// <summary>
     /// Represents the event handler that handles the AccountAuthenticatedEvent.
     /// </summary>
-    public class AccountAuthenticatedEventHandler : Apworks.Events.EventHandler<AccountAuthenticatedEvent>
+    internal class AccountAuthenticatedEventHandler : Apworks.Events.EventHandler<AccountAuthenticatedEvent>
     {
         private readonly IRepositoryContext repositoryContext;
         private readonly IRepository<Guid, Authentication> authenticationRepository;

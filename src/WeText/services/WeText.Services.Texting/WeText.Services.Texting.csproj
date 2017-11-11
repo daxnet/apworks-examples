@@ -9,8 +9,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Apworks" Version="0.1.131" />
+    <PackageReference Include="Apworks.Integration.AspNetCore" Version="0.1.131" />
     <PackageReference Include="Apworks.Messaging.RabbitMQ" Version="0.1.131" />
     <PackageReference Include="Apworks.Serialization.Json" Version="0.1.131" />
+    <PackageReference Include="Dapper" Version="1.50.2" />
+    <PackageReference Include="Dapper.Contrib" Version="1.50.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
@@ -24,6 +27,9 @@
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WeText.Services.Shared\WeText.Services.Shared.csproj" />
   </ItemGroup>
 
 </Project>

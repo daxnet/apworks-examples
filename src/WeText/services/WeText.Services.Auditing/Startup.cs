@@ -43,8 +43,8 @@ namespace WeText.Services.Auditing
 
             services
                 .AddApworks()
-                .WithEventSubscriber(x => new EventBus(connectionFactory, messageSerializer, exchangeName, ExchangeType.Topic, queueName))
-                .WithDefaultEventConsumer("wetext.*")
+                .WithEventSubscriber(x=>new EventBus(connectionFactory, messageSerializer, exchangeName, ExchangeType.Topic, queueName))
+                .WithDefaultEventConsumer("events.*")
                 .AddEventHandler(x=> new AccountAuthenticatedEventHandler(x.GetService<IRepositoryContext>()))
                 .WithDataServiceSupport(new DataServiceConfigurationOptions(sp =>
                     new EntityFrameworkRepositoryContext(new AuditingDataContext())))

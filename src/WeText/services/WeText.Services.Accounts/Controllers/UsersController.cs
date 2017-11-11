@@ -90,7 +90,7 @@ namespace WeText.Services.Accounts.Controllers
         private async Task PublishMessageAsync<TMessage>(TMessage msg)
             where TMessage : IMessage
         {
-            await this.integrationMessageBus.PublishAsync(msg, "wetext.integration");
+            await this.integrationMessageBus.PublishAsync(msg, "events.accounts");
         }
     }
 }
