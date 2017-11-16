@@ -8,10 +8,10 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Apworks" Version="0.1.131" />
-    <PackageReference Include="Apworks.Integration.AspNetCore" Version="0.1.131" />
-    <PackageReference Include="Apworks.Messaging.RabbitMQ" Version="0.1.131" />
-    <PackageReference Include="Apworks.Serialization.Json" Version="0.1.131" />
+    <PackageReference Include="Apworks" Version="0.1.138" />
+    <PackageReference Include="Apworks.Integration.AspNetCore" Version="0.1.138" />
+    <PackageReference Include="Apworks.Messaging.RabbitMQ" Version="0.1.138" />
+    <PackageReference Include="Apworks.Serialization.Json" Version="0.1.138" />
     <PackageReference Include="Dapper" Version="1.50.2" />
     <PackageReference Include="Dapper.Contrib" Version="1.50.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />

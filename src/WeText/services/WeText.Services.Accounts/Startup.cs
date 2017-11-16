@@ -15,11 +15,14 @@ using Apworks.Messaging;
 using Apworks.Serialization.Json;
 using Apworks.Messaging.RabbitMQ;
 using RabbitMQ.Client;
+using Apworks.Events;
 
 namespace WeText.Services.Accounts
 {
     public class Startup
     {
+        private IEventPublisher eventPublisher;
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -44,12 +47,10 @@ namespace WeText.Services.Accounts
             var rabbitHost = this.Configuration["rabbit:host"];
             var exchangeName = this.Configuration["rabbit:exchange"];
 
-            services.AddSingleton<IMessageSerializer>(new MessageJsonSerializer())
-                .AddSingleton<IMessageBus>(serviceProvider => new MessageBus(new ConnectionFactory { HostName = rabbitHost }, 
-                    serviceProvider.GetService<IMessageSerializer>(),
-                    exchangeName, ExchangeType.Topic));
+            var messageSerializer = new MessageJsonSerializer();
 
             services.AddApworks()
+                .WithEventPublisher(new EventBus(new ConnectionFactory { HostName = rabbitHost }, messageSerializer, exchangeName, ExchangeType.Topic))
                 .WithDataServiceSupport(new DataServiceConfigurationOptions
                     (new MongoRepositoryContext
                         (new MongoRepositorySettings(mongoServer, mongoPort, mongoDatabase))))

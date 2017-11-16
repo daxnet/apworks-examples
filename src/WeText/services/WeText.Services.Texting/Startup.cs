@@ -15,11 +15,15 @@ using Apworks.Integration.AspNetCore;
 using WeText.Services.Texting.EventHandlers;
 using Apworks.Events;
 using Apworks.Commands;
+using Apworks.Integration.AspNetCore.Hal;
+using Hal.Builders;
+using WeText.Services.Texting.CommandHandlers;
 
 namespace WeText.Services.Texting
 {
     public class Startup
     {
+        private ICommandSender commandSender;
         private IEventConsumer eventConsumer;
         private ICommandConsumer commandConsumer;
 
@@ -38,9 +42,18 @@ namespace WeText.Services.Texting
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Reads the host machine which runs the RabbitMQ.
             var rabbitHost = this.Configuration["rabbit:host"];
+
+            // Reads the RabbitMQ exchange setting.
             var rabbitExchangeName = this.Configuration["rabbit:exchange"];
-            var rabbitQueueName = this.Configuration["rabbit:queue"];
+
+            // Reads the name of the event queue.
+            var rabbitEventQueueName = this.Configuration["rabbit:eventQueue"];
+
+            // Reads the name of the command queue.
+            var rabbitCommandQueueName = this.Configuration["rabbit:commandQueue"];
+
             var connectionFactory = new ConnectionFactory { HostName = rabbitHost };
             var messageSerializer = new MessageJsonSerializer();
 
@@ -48,15 +61,18 @@ namespace WeText.Services.Texting
             services.AddMvc();
 
             services.AddApworks()
-                .WithCommandSubscriber(new CommandBus(connectionFactory, messageSerializer, rabbitExchangeName, ExchangeType.Topic, rabbitQueueName))
-                .WithDefaultCommandConsumer("commands.texting")
-                //.AddCommandHandler(null)
-                .WithEventSubscriber(new EventBus(connectionFactory, messageSerializer, rabbitExchangeName, ExchangeType.Topic, rabbitQueueName))
+                .WithCommandSender(new CommandBus(connectionFactory, messageSerializer, rabbitExchangeName, ExchangeType.Topic))
+                .WithCommandSubscriber(new CommandBus(connectionFactory, messageSerializer, rabbitExchangeName, ExchangeType.Topic, rabbitCommandQueueName))
+                .WithDefaultCommandConsumer("commands.*")
+                .AddCommandHandler(new PostTextCommandHandler())
+                .WithEventSubscriber(new EventBus(connectionFactory, messageSerializer, rabbitExchangeName, ExchangeType.Topic, rabbitEventQueueName))
                 .WithDefaultEventConsumer("events.*")
                 .AddEventHandler(new AccountCreatedEventHandler(this.Configuration))
                 .Configure();
 
             var serviceProvider = services.BuildServiceProvider();
+
+            this.commandSender = serviceProvider.GetService<ICommandSender>();
 
             this.eventConsumer = serviceProvider.GetService<IEventConsumer>();
             this.eventConsumer.Consume();
@@ -70,6 +86,7 @@ namespace WeText.Services.Texting
         {
             applicationLifetime.ApplicationStopping.Register(() =>
             {
+                this.commandSender.Dispose();
                 this.eventConsumer.Dispose();
                 this.commandConsumer.Dispose();
             });

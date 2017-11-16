@@ -6,10 +6,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using WeText.Services.Shared.Events;
 using WeText.Services.Texting.Model;
+using Apworks.Events;
 
 namespace WeText.Services.Texting.EventHandlers
 {
-    internal class AccountCreatedEventHandler : Apworks.Events.EventHandler<AccountCreatedEvent>
+    internal class AccountCreatedEventHandler : EventHandler<AccountCreatedEvent>
     {
         private readonly IConfigurationRoot config;
         private readonly string connectionString;

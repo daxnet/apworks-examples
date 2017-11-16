@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Apworks.Integration.AspNetCore.Hal;
+using Apworks.Querying;
 
 namespace WeText.Services.Texting.Controllers
 {
+    [SupportsHal]
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
@@ -18,9 +21,10 @@ namespace WeText.Services.Texting.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var values = new[] { "a", "b", "c", "d", "e" };
+            return Ok(new PagedResult(values, 1, 10, values.Length, 1));
         }
 
         // POST api/values

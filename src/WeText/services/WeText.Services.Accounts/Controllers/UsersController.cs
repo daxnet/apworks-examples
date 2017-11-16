@@ -1,28 +1,34 @@
-﻿using WeText.Services.Accounts.Models;
-using WeText.Services.Shared.Events;
+﻿using Apworks.Events;
 using Apworks.Integration.AspNetCore.DataServices;
-using System;
 using Apworks.Messaging;
 using Apworks.Repositories;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
-using System.Net;
+using System.Threading.Tasks;
+using WeText.Services.Accounts.Models;
+using WeText.Services.Shared.Events;
 
 namespace WeText.Services.Accounts.Controllers
 {
     /// <summary>
-    /// Represents the controller that manages users.
+    /// Represents the users API controller.
     /// </summary>
     public sealed class UsersController : DataServiceController<Guid, User>
     {
-        private readonly IMessageBus integrationMessageBus;
+        private readonly IEventPublisher eventPublisher;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UsersController"/> class.
+        /// </summary>
+        /// <param name="repositoryContext">The repository context instance used by the current API controller to manage
+        /// the lifecyle of the aggregates.</param>
+        /// <param name="eventPublisher">The event publisher.</param>
         public UsersController(IRepositoryContext repositoryContext,
-            IMessageBus integrationMessageBus)
+            IEventPublisher eventPublisher)
             : base(repositoryContext)
         {
-            this.integrationMessageBus = integrationMessageBus;
+            this.eventPublisher = eventPublisher;
         }
 
         public override async Task<IActionResult> Post([FromBody] User aggregateRoot)
@@ -90,7 +96,7 @@ namespace WeText.Services.Accounts.Controllers
         private async Task PublishMessageAsync<TMessage>(TMessage msg)
             where TMessage : IMessage
         {
-            await this.integrationMessageBus.PublishAsync(msg, "events.accounts");
+            await this.eventPublisher.PublishAsync(msg, "events.accounts");
         }
     }
 }
