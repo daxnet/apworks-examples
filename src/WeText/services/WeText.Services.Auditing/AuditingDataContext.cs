@@ -44,7 +44,7 @@ namespace WeText.Services.Auditing
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(@"User ID=wetext;Password=wetext;Host=192.168.0.111;Port=5432;Database=wetext_auditing;");
+            optionsBuilder.UseNpgsql(@"User ID=wetext;Password=wetext;Host=localhost;Port=5432;Database=wetext_auditing;");
         }
     }
 }

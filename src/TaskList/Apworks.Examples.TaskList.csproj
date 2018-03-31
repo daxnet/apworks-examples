@@ -15,8 +15,8 @@
     <None Remove="wwwroot\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Apworks.Integration.AspNetCore" Version="0.1.122" />
-    <PackageReference Include="Apworks.Repositories.MongoDB" Version="0.1.122" />
+    <PackageReference Include="Apworks.Integration.AspNetCore" Version="0.1.147" />
+    <PackageReference Include="Apworks.Repositories.MongoDB" Version="0.1.147" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />

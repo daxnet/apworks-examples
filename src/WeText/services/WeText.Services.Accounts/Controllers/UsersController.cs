@@ -96,7 +96,7 @@ namespace WeText.Services.Accounts.Controllers
         private async Task PublishMessageAsync<TMessage>(TMessage msg)
             where TMessage : IMessage
         {
-            await this.eventPublisher.PublishAsync(msg, "events.accounts");
+            await this.eventPublisher.PublishAsync(msg);
         }
     }
 }

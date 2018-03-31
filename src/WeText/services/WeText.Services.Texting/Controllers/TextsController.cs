@@ -25,7 +25,7 @@ namespace WeText.Services.Texting.Controllers
             var isPublic = (bool)text.isPublic;
             var content = (string)text.content;
 
-            await this.commandSender.PublishAsync(new PostTextCommand(accountName, isPublic, content), "commands.texting");
+            await this.commandSender.PublishAsync(new PostTextCommand(accountName, isPublic, content));
 
             return Ok();
         }

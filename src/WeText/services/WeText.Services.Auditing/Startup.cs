@@ -16,13 +16,13 @@ using WeText.Services.Shared;
 using WeText.Services.Auditing.EventHandlers;
 using Apworks.Events;
 using System.Linq;
+using Apworks.Integration.AspNetCore.Messaging;
+using WeText.Services.Shared.Events;
 
 namespace WeText.Services.Auditing
 {
     public class Startup
     {
-        private IEventConsumer eventConsumer;
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -38,30 +38,31 @@ namespace WeText.Services.Auditing
             var rabbitHost = this.Configuration["rabbit:host"];
             var exchangeName = this.Configuration["rabbit:exchange"];
             var queueName = this.Configuration["rabbit:queue"];
+
             var connectionFactory = new ConnectionFactory { HostName = rabbitHost };
+            var messageHandlerExecutionContext = new ServiceProviderMessageHandlerExecutionContext(services, x => x.BuildServiceProvider());
             var messageSerializer = new MessageJsonSerializer();
+
+            var eventSubscriber = new RabbitEventBus(connectionFactory, messageSerializer, messageHandlerExecutionContext, exchangeName, ExchangeType.Topic);
+            eventSubscriber.Subscribe<AccountAuthenticatedEvent, AccountAuthenticatedEventHandler>();
+
+            services.AddSingleton<IEventSubscriber>(eventSubscriber);
 
             services
                 .AddApworks()
-                .WithEventSubscriber(x=>new EventBus(connectionFactory, messageSerializer, exchangeName, ExchangeType.Topic, queueName))
-                .WithDefaultEventConsumer("events.*")
-                .AddEventHandler(x=> new AccountAuthenticatedEventHandler(x.GetService<IRepositoryContext>()))
                 .WithDataServiceSupport(new DataServiceConfigurationOptions(sp =>
                     new EntityFrameworkRepositoryContext(new AuditingDataContext())))
                 .Configure();
-
-            var serviceProvider = services.BuildServiceProvider();
-
-            this.eventConsumer = serviceProvider.GetService<IEventConsumer>();
-            this.eventConsumer.Consume();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
         {
+            var eventSubscriber = app.ApplicationServices.GetRequiredService<IEventSubscriber>();
+
             applicationLifetime.ApplicationStopping.Register(() =>
             {
-                this.eventConsumer.Dispose();
+                eventSubscriber.Dispose();
             });
 
             if (env.IsDevelopment())

@@ -16,13 +16,12 @@ using Apworks.Serialization.Json;
 using Apworks.Messaging.RabbitMQ;
 using RabbitMQ.Client;
 using Apworks.Events;
+using Apworks.Integration.AspNetCore.Messaging;
 
 namespace WeText.Services.Accounts
 {
     public class Startup
     {
-        private IEventPublisher eventPublisher;
-
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -47,10 +46,15 @@ namespace WeText.Services.Accounts
             var rabbitHost = this.Configuration["rabbit:host"];
             var exchangeName = this.Configuration["rabbit:exchange"];
 
+            var connectionFactory = new ConnectionFactory { HostName = rabbitHost };
             var messageSerializer = new MessageJsonSerializer();
+            var messageHandlerExecutionContext = new ServiceProviderMessageHandlerExecutionContext(services, x => x.BuildServiceProvider());
+            var eventPublisher = new RabbitEventBus(connectionFactory, messageSerializer, messageHandlerExecutionContext, exchangeName, ExchangeType.Topic);
+
+            services.AddSingleton<IEventPublisher>(eventPublisher);
 
             services.AddApworks()
-                .WithEventPublisher(new EventBus(new ConnectionFactory { HostName = rabbitHost }, messageSerializer, exchangeName, ExchangeType.Topic))
+                // .WithEventPublisher(new EventBus(new ConnectionFactory { HostName = rabbitHost }, messageSerializer, exchangeName, ExchangeType.Topic))
                 .WithDataServiceSupport(new DataServiceConfigurationOptions
                     (new MongoRepositoryContext
                         (new MongoRepositorySettings(mongoServer, mongoPort, mongoDatabase))))
@@ -58,12 +62,19 @@ namespace WeText.Services.Accounts
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime lifetime)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
             app.EnrichDataServiceExceptionResponse();
+
+            var eventPublisher = app.ApplicationServices.GetRequiredService<IEventPublisher>();
+
+            lifetime.ApplicationStopping.Register(() =>
+            {
+                eventPublisher.Dispose();
+            });
 
             app.UseCors(builder => builder
                 .AllowAnyOrigin()

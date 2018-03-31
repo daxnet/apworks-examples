@@ -12,13 +12,11 @@ namespace WeText.Services.Texting.EventHandlers
 {
     internal class AccountCreatedEventHandler : EventHandler<AccountCreatedEvent>
     {
-        private readonly IConfigurationRoot config;
         private readonly string connectionString;
 
-        public AccountCreatedEventHandler(IConfigurationRoot configuration)
+        public AccountCreatedEventHandler(string connectionString)
         {
-            this.config = configuration;
-            this.connectionString = config["mssql:query.db"];
+            this.connectionString = connectionString;
         }
 
         public override async Task<bool> HandleAsync(AccountCreatedEvent message, CancellationToken cancellationToken = default(CancellationToken))
