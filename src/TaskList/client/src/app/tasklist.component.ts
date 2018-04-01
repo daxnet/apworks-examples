@@ -40,17 +40,17 @@ import { NotificationsService } from 'angular2-notifications';
 
 export class TaskListComponent implements OnInit {
 
-    private taskListResponse: TaskListResponse;
+    taskListResponse: TaskListResponse;
 
     // The number array which holds the indecies of each page.
-    private pageIndecies: number[] = new Array();
+    pageIndecies: number[] = new Array();
 
     // The number which holds the current page number.
-    private currentPageIdx: number;
+    currentPageIdx: number;
 
-    private newTaskItemTitle: string;
+    newTaskItemTitle: string;
 
-    private hideRequiredMessage: boolean = true;
+    hideRequiredMessage: boolean = true;
 
     ngOnInit(): void {
         this.getTaskList();
