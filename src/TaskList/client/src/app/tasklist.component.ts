@@ -92,7 +92,7 @@ export class TaskListComponent implements OnInit {
             });
     }
 
-    private onAddNewClick(): void {
+    onAddNewClick(): void {
         this.hideRequiredMessage = this.newTaskItemTitle != null && this.newTaskItemTitle != '';
         if (this.newTaskItemTitle) {
             this.service.addNew(this.newTaskItemTitle)

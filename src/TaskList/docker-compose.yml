@@ -1,0 +1,25 @@
+version: "3"
+services:
+  db:
+    image: mongo
+    container_name: mongo
+  
+  service:
+    image: daxnet/tasklistservice
+    links:
+      - db
+    depends_on:
+      - db
+    ports:
+      - 9023:9023
+    container_name: tasklistservice
+
+  web:
+    image: daxnet/tasklistweb
+    links:
+      - service
+    depends_on:
+      - service
+    ports:
+      - 80:80
+    container_name: tasklistweb
